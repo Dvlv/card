@@ -4,7 +4,9 @@
 
 [node name="CardRepresentation" type="Node2D"]
 
+position = Vector2( 46, 47 )
 script = ExtResource( 1 )
+CARD_RESOURCE = null
 
 [node name="TextureButton" type="TextureButton" parent="." index="0"]
 

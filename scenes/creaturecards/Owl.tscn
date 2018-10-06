@@ -7,6 +7,7 @@
 [sub_resource type="Resource" id=1]
 
 script = ExtResource( 3 )
+CARD_NAME = "Little Owl"
 CARD_IMAGE = ExtResource( 2 )
 CARD_TYPE = null
 CARD_TEXT = "Owl do you do?"

@@ -6,6 +6,7 @@ export(Resource) var CARD_RESOURCE = null
 func _ready():
 	$CardImage.texture = CARD_RESOURCE.CARD_IMAGE
 	$CardText.text = CARD_RESOURCE.CARD_TEXT
+	$CardName.text = CARD_RESOURCE.CARD_NAME
 	
 	$CardPower.text = str(CARD_RESOURCE.POWER)
 	$CardHP.text = str(CARD_RESOURCE.HP)
