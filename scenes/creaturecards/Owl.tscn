@@ -1,17 +1,25 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/Card.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/cards/cardimages/owl.png" type="Texture" id=2]
+[ext_resource path="res://scripts/CardResource.gd" type="Script" id=3]
 
-[node name="Card" instance=ExtResource( 1 )]
+[sub_resource type="Resource" id=1]
 
-position = Vector2( 120, 120 )
-_sections_unfolded = [ "Transform" ]
+script = ExtResource( 3 )
 CARD_IMAGE = ExtResource( 2 )
+CARD_TYPE = null
 CARD_TEXT = "Owl do you do?"
 POWER = 1
 HP = 2
 CARD_ELEMENT = 2
 CARD_FACTION = 1
+CARD_CREATURE_TYPE = 1
+
+[node name="Card" instance=ExtResource( 1 )]
+
+position = Vector2( 120, 120 )
+_sections_unfolded = [ "Transform" ]
+CARD_RESOURCE = SubResource( 1 )
 
 

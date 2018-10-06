@@ -1,30 +1,17 @@
 extends Node2D
 
-enum TYPES { Creature, Equip, Element, }
-enum ELEMENTS { Plain, Fire, Air, Earth, Water, Electricity, }
-enum FACTIONS { None, Forest, Orc, Human, Sea, Pole }
-enum CREATURE_TYPE { NotCreature, Bird, Bear, Fish, Magic, Melee, Passive, Aggressive }
-
-export(Texture) var CARD_IMAGE = null
-export(TYPES) var CARD_TYPE = TYPES.Creature
-export(String) var CARD_TEXT = "Card Text"
-
-export(int) var POWER = 0
-export(int) var HP = 0
-
-export(ELEMENTS) var CARD_ELEMENT = ELEMENTS.Plain
-export(FACTIONS) var CARD_FACTION = FACTIONS.None
-export(CREATURE_TYPE) var CARD_CREATURE_TYPE = CREATURE_TYPE.NotCreature
+export(Resource) var CARD_RESOURCE = null
 
 
 func _ready():
-	$CardImage.texture = CARD_IMAGE
-	$CardText.text = CARD_TEXT
+	$CardImage.texture = CARD_RESOURCE.CARD_IMAGE
+	$CardText.text = CARD_RESOURCE.CARD_TEXT
 	
-	$CardPower.text = str(POWER) if POWER > 0 else ""
-	$CardHP.text = str(HP) if HP > 0 else ""
+	$CardPower.text = str(CARD_RESOURCE.POWER)
+	$CardHP.text = str(CARD_RESOURCE.HP)
 	
 	_set_card_background()
+	_hide_nums_if_needed()
 
 func move_to_fuse_box():
 	pass
@@ -45,10 +32,15 @@ func on_attacked():
 	pass
 	
 func _set_card_background():
-	if CARD_TYPE == TYPES.Creature:
+	if CARD_RESOURCE.CARD_TYPE == CARD_RESOURCE.TYPES.Creature:
 		$Background.texture = load("res://assets/cards/creature.png")
-	elif CARD_TYPE == TYPES.Equip:
+	elif CARD_RESOURCE.CARD_TYPE == CARD_RESOURCE.TYPES.Equip:
 		$Background.texture = load("res://assets/cards/equip.png")
-	elif CARD_TYPE == TYPES.Element:
+	elif CARD_RESOURCE.CARD_TYPE == CARD_RESOURCE.TYPES.Element:
 		$Background.texture = load("res://assets/cards/element.png")
+		
+func _hide_nums_if_needed():
+	if CARD_RESOURCE.CARD_TYPE == CARD_RESOURCE.TYPES.Element:
+		$CardPower.visible = false
+		$CardHP.visible = false
 	

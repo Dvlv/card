@@ -1,31 +1,56 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/Card.gd" type="Script" id=1]
-[ext_resource path="res://assets/cards/creature.png" type="Texture" id=2]
-[ext_resource path="res://assets/cards/cardimages/owl.png" type="Texture" id=3]
-[ext_resource path="res://ubuntu_dynamicfont.tres" type="DynamicFont" id=4]
-[ext_resource path="res://ubuntu-df.tres" type="DynamicFont" id=5]
+[ext_resource path="res://assets/cards/cardimages/bow-and-arrow.png" type="Texture" id=2]
+[ext_resource path="res://assets/cards/creature.png" type="Texture" id=3]
+[ext_resource path="res://assets/cards/cardimages/owl.png" type="Texture" id=4]
+[ext_resource path="res://ubuntu_dynamicfont.tres" type="DynamicFont" id=5]
+[ext_resource path="res://ubuntu-df.tres" type="DynamicFont" id=6]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "enum TYPES { Creature, Equip, Element, }
+enum ELEMENTS { Plain, Fire, Air, Earth, Water, Electricity, }
+enum FACTIONS { None, Forest, Orc, Human, Sea, Pole }
+enum CREATURE_TYPE { NotCreature, Bird, Bear, Fish, Magic, Melee, Passive, Aggressive }
+
+export(Texture) var CARD_IMAGE = null
+export(TYPES) var CARD_TYPE = TYPES.Creature
+export(String) var CARD_TEXT = \"Card Text\"
+
+export(int) var POWER = 0
+export(int) var HP = 0
+
+export(ELEMENTS) var CARD_ELEMENT = ELEMENTS.Plain
+export(FACTIONS) var CARD_FACTION = FACTIONS.None
+export(CREATURE_TYPE) var CARD_CREATURE_TYPE = CREATURE_TYPE.NotCreature"
+
+[sub_resource type="Resource" id=2]
+
+script = SubResource( 1 )
+_sections_unfolded = [ "Resource" ]
+CARD_IMAGE = ExtResource( 2 )
+CARD_TYPE = 1
+CARD_TEXT = "Adds 1 Power"
+POWER = 1
+HP = 0
+CARD_ELEMENT = 0
+CARD_FACTION = null
+CARD_CREATURE_TYPE = null
 
 [node name="Card" type="Node2D"]
 
 script = ExtResource( 1 )
-CARD_IMAGE = null
-CARD_TYPE = null
-CARD_TEXT = "Card Text"
-POWER = 0
-HP = 0
-CARD_ELEMENT = null
-CARD_FACTION = null
-CARD_CREATURE_TYPE = null
+CARD_RESOURCE = SubResource( 2 )
 
 [node name="Background" type="Sprite" parent="." index="0"]
 
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 
 [node name="CardImage" type="Sprite" parent="." index="1"]
 
 position = Vector2( 0.157776, -59.3156 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 
 [node name="CardText" type="Label" parent="." index="2"]
 
@@ -43,7 +68,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Card Text"
 align = 1
@@ -70,7 +95,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0.501961, 0.501961, 0.501961, 1 )
 text = "5"
@@ -97,7 +122,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0.503906, 0.503906, 0.503906, 1 )
 text = "8"
