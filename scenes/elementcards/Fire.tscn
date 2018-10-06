@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/Card.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/cards/cardimages/fire.png" type="Texture" id=2]
+
+[node name="Card" index="0" instance=ExtResource( 1 )]
+
+position = Vector2( 120, 120 )
+_sections_unfolded = [ "Transform" ]
+CARD_IMAGE = ExtResource( 2 )
+CARD_TYPE = 2
+CARD_TEXT = "Fire"
+CARD_ELEMENT = 1
+
+
