@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scripts/Board.gd" type="Script" id=1]
 [ext_resource path="res://assets/board.png" type="Texture" id=2]
 [ext_resource path="res://scenes/BoardSlot.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Hand.tscn" type="PackedScene" id=4]
 
 [node name="Board" type="Node2D" index="0"]
 
@@ -16,50 +17,94 @@ _sections_unfolded = [ "Offset", "Transform" ]
 
 [node name="PlayerSlots" type="Node2D" parent="BoardBackground" index="0"]
 
-position = Vector2( 5.78992, 221.948 )
+position = Vector2( 6, 222 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="BoardSlot1" parent="BoardBackground/PlayerSlots" index="0" instance=ExtResource( 3 )]
 
-position = Vector2( 1.15204, -149.253 )
+position = Vector2( 40, -150 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="BoardSlot2" parent="BoardBackground/PlayerSlots" index="1" instance=ExtResource( 3 )]
 
-position = Vector2( -193.261, -151.102 )
+position = Vector2( -145, -150 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="BoardSlot3" parent="BoardBackground/PlayerSlots" index="2" instance=ExtResource( 3 )]
 
-position = Vector2( 170.981, -150.783 )
+position = Vector2( 220, -150 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="BoardSlot4" parent="BoardBackground/PlayerSlots" index="3" instance=ExtResource( 3 )]
 
-position = Vector2( -367.471, -162.171 )
+position = Vector2( -330, -150 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="BoardSlot5" parent="BoardBackground/PlayerSlots" index="4" instance=ExtResource( 3 )]
 
-position = Vector2( 371.806, -166.599 )
+position = Vector2( 400, -150 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="OpponentSlots" type="Node2D" parent="BoardBackground" index="1"]
 
-position = Vector2( -4.03198, -228.632 )
+position = Vector2( 6, -222 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="BoardSlot1" parent="BoardBackground/OpponentSlots" index="0" instance=ExtResource( 3 )]
 
-position = Vector2( 15.3438, 150.014 )
+position = Vector2( 40, 150 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="BoardSlot2" parent="BoardBackground/OpponentSlots" index="1" instance=ExtResource( 3 )]
 
-position = Vector2( -167.703, 142.887 )
+position = Vector2( -145, 150 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="BoardSlot3" parent="BoardBackground/OpponentSlots" index="2" instance=ExtResource( 3 )]
 
-position = Vector2( 196.797, 140.192 )
+position = Vector2( 220, 150 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="BoardSlot4" parent="BoardBackground/OpponentSlots" index="3" instance=ExtResource( 3 )]
 
-position = Vector2( -347.167, 136.783 )
+position = Vector2( -330, 150 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="BoardSlot5" parent="BoardBackground/OpponentSlots" index="4" instance=ExtResource( 3 )]
 
-position = Vector2( 380.267, 130.461 )
+position = Vector2( 400, 150 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Button" type="Button" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1107.0
+margin_top = 465.0
+margin_right = 1196.0
+margin_bottom = 528.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "add owl"
+flat = false
+align = 1
+
+[node name="Hand" parent="." index="2" instance=ExtResource( 4 )]
+
+position = Vector2( 190, 675 )
+_sections_unfolded = [ "Transform" ]
+
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 
 
