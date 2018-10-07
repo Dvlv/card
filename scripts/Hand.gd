@@ -1,9 +1,9 @@
 extends Node2D
 
-func add_card(card):
+func add_card(card_res):
 	var slot = get_next_empty_slot()
 	if slot:
-		slot.add_card(card.CARD_RESOURCE)
+		slot.add_card(card_res)
 		
 		return true
 	
