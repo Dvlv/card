@@ -30,7 +30,7 @@ func close_card_menu():
 		my_card.close_menus()
 		
 func connect_active_signal(logic):
-	if my_card:
+	if my_card and not my_card.is_connected("active_card", logic, "update_active_card"):
 		my_card.connect("active_card", logic, "update_active_card")
 		
 
