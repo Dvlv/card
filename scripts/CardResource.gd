@@ -3,6 +3,8 @@ enum ELEMENTS { Plain, Fire, Air, Earth, Water, Electricity, }
 enum FACTIONS { None, Forest, Orc, Human, Sea, Pole }
 enum CREATURE_TYPE { NotCreature, Bird, Bear, Fish, Magic, Melee, Passive, Aggressive }
 
+export(Script) var SCRIPT_FILE = null
+
 export(String) var CARD_NAME = "Card Name"
 export(Texture) var CARD_IMAGE = null
 export(TYPES) var CARD_TYPE = TYPES.Creature

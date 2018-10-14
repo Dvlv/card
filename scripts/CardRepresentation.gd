@@ -56,3 +56,11 @@ func set_in_hand():
 
 func play_card():
 	emit_signal("card_played", my_slot)
+	
+	
+func attack():
+	if CARD_RESOURCE.SCRIPT_FILE:
+		CARD_RESOURCE.SCRIPT_FILE.attack()
+	else:
+		print(CARD_RESOURCE.CARD_NAME, "has no script")
+	

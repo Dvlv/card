@@ -199,7 +199,6 @@ align = 1
 
 [node name="FieldMenu" type="Node2D" parent="." index="3"]
 
-editor/display_folded = true
 position = Vector2( -40, -95 )
 script = ExtResource( 6 )
 _sections_unfolded = [ "Transform" ]
@@ -312,6 +311,8 @@ align = 1
 [connection signal="pressed" from="HandMenu/Control/VBoxContainer/Play" to="HandMenu" method="_on_Play_pressed"]
 
 [connection signal="pressed" from="HandMenu/Control/VBoxContainer/Cancel" to="HandMenu" method="_on_Cancel_pressed"]
+
+[connection signal="pressed" from="FieldMenu/Control/VBoxContainer/Attack" to="FieldMenu" method="_on_Attack_pressed"]
 
 [connection signal="pressed" from="FieldMenu/Control/VBoxContainer/Cancel" to="FieldMenu" method="_on_Cancel_pressed"]
 
