@@ -4,12 +4,13 @@ var my_card = null
 
 onready var card_rep_scene = preload("res://scenes/CardRepresentation.tscn")
 
-func add_card(card_res):
+func add_card(card_res, is_opponent):
 	if not my_card:
 		var card_rep = card_rep_scene.instance()
 		card_rep.CARD_RESOURCE = card_res
 		card_rep.position = Vector2(0,0)
 		set_location(card_rep)
+		card_rep.is_opponent_card = is_opponent
 		add_child(card_rep)
 		my_card = card_rep
 		card_rep.my_slot = self

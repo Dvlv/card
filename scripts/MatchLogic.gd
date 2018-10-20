@@ -11,7 +11,7 @@ func set_deck(deck_card_resources):
 		
 func fill_hand():
 	while $Hand.get_next_empty_slot():
-		$Hand.add_card($Deck.draw())
+		$Hand.add_card($Deck.draw(), false)
 	connect_all_hand_card_reps()
 
 func connect_all_hand_card_reps():
@@ -35,6 +35,8 @@ func play_card(slot):
 	
 	
 func do_card_battle(player_card, opp_card):
+	$Hand.close_all_menus()
+	$Board.close_all_menus()
 	opp_card.take_damage(player_card.CARD_RESOURCE.POWER)
 	player_card.take_damage(opp_card.CARD_RESOURCE.POWER)
 
@@ -50,6 +52,13 @@ func on_damage_opponent_card(dmg):
 func on_damage_opponent(dmg):
 	print("damaging opponent for ", dmg)
 	damage_opponent(dmg)
+	
+
+func on_card_selected_for_attack(opp_card):
+	do_card_battle(globals.card_attacking, opp_card)
+	$Board.disconnect_opponent_select_signals(self, "on_card_selected_for_attack")
+	globals.is_in_attack_choose_state = false
+	globals.card_attacking = null
 
 
 func on_declare_attack(attacker_card_rep):
@@ -60,12 +69,12 @@ func on_declare_attack(attacker_card_rep):
 		var opponent_creature_card_rep = $Board.get_opponent_only_card()
 		do_card_battle(attacker_card_rep, opponent_creature_card_rep)
 	else:
-		pass  # do opponent card selection
+		globals.is_in_attack_choose_state = true
+		globals.card_attacking = attacker_card_rep
+		$Board.connect_opponent_select_signals(self, "on_card_selected_for_attack")
 		
 
 
-		
-		
-		
+
 func add_to_opponent_board(card_res):
 	$Board.add_opponent_card(card_res)

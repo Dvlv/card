@@ -14,5 +14,6 @@ func _ready():
 	$MatchLogic.fill_hand()
 	
 	$MatchLogic.add_to_opponent_board(owl)
+	$MatchLogic.add_to_opponent_board(bear)
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/CardRepresentation.gd" type="Script" id=1]
 [ext_resource path="res://resources/Owl.tres" type="Resource" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/cards/black.png" type="Texture" id=4]
 [ext_resource path="res://scripts/HandMenu.gd" type="Script" id=5]
 [ext_resource path="res://scripts/FieldMenu.gd" type="Script" id=6]
+[ext_resource path="res://scripts/OpponentFieldMenu.gd" type="Script" id=7]
 
 [node name="CardRepresentation" type="Node2D"]
 
@@ -86,6 +87,8 @@ _sections_unfolded = [ "custom_constants", "custom_fonts", "custom_styles" ]
 
 [node name="HandMenu" type="Node2D" parent="." index="2"]
 
+editor/display_folded = true
+visible = false
 position = Vector2( -40, -95 )
 script = ExtResource( 5 )
 _sections_unfolded = [ "Transform" ]
@@ -199,6 +202,7 @@ align = 1
 
 [node name="FieldMenu" type="Node2D" parent="." index="3"]
 
+visible = false
 position = Vector2( -40, -95 )
 script = ExtResource( 6 )
 _sections_unfolded = [ "Transform" ]
@@ -306,6 +310,90 @@ text = "Cancel"
 flat = false
 align = 1
 
+[node name="OpponentFieldMenu" type="Node2D" parent="." index="4"]
+
+script = ExtResource( 7 )
+
+[node name="Control" type="Control" parent="OpponentFieldMenu" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -108.0
+margin_top = -132.0
+margin_right = 32.0
+margin_bottom = -62.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OpponentFieldMenu/Control" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+
+[node name="Select" type="Button" parent="OpponentFieldMenu/Control/VBoxContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 140.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Select"
+flat = false
+align = 1
+
+[node name="Cancel" type="Button" parent="OpponentFieldMenu/Control/VBoxContainer" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 24.0
+margin_right = 140.0
+margin_bottom = 44.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Cancel"
+flat = false
+align = 1
+
 [connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]
 
 [connection signal="pressed" from="HandMenu/Control/VBoxContainer/Play" to="HandMenu" method="_on_Play_pressed"]
@@ -315,5 +403,9 @@ align = 1
 [connection signal="pressed" from="FieldMenu/Control/VBoxContainer/Attack" to="FieldMenu" method="_on_Attack_pressed"]
 
 [connection signal="pressed" from="FieldMenu/Control/VBoxContainer/Cancel" to="FieldMenu" method="_on_Cancel_pressed"]
+
+[connection signal="pressed" from="OpponentFieldMenu/Control/VBoxContainer/Select" to="OpponentFieldMenu" method="_on_Select_pressed"]
+
+[connection signal="pressed" from="OpponentFieldMenu/Control/VBoxContainer/Cancel" to="OpponentFieldMenu" method="_on_Cancel_pressed"]
 
 

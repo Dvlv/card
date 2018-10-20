@@ -2,15 +2,19 @@ extends Node2D
 
 signal active_card
 signal card_played
+signal card_selected
 signal damage_opponent_card
 signal damage_opponent
 signal declare_attack
+
 
 export(Resource) var CARD_RESOURCE = null
 
 var is_on_field = false
 var is_in_hand = false
+var is_opponent_card = false
 var my_slot = null
+
 onready var my_card_script_node = Node2D.new()
 
 func _ready():
@@ -22,13 +26,16 @@ func _ready():
 		
 	$HandMenu.visible = false
 	$FieldMenu.visible = false
+	$OpponentFieldMenu.visible = false
 
 
 func _on_TextureButton_pressed():
 	emit_signal("active_card", CARD_RESOURCE)
 	
-	if is_on_field:
+	if is_on_field and not is_opponent_card:
 		$FieldMenu.visible = true
+	elif is_on_field and is_opponent_card and globals.is_in_attack_choose_state:
+		$OpponentFieldMenu.visible = true
 	elif is_in_hand:
 		$HandMenu.visible = true
 
@@ -58,6 +65,7 @@ func connect_attack_and_effect_signals():
 func close_menus():
 	$FieldMenu.visible = false
 	$HandMenu.visible = false
+	$OpponentFieldMenu.visible = false
 
 
 func set_on_field():
@@ -84,6 +92,10 @@ func emit_damage_opponent():
 
 func emit_declare_attack():
 	emit_signal("declare_attack", self)
+	
+
+func emit_card_selected():
+	emit_signal("card_selected", self)
 
 
 func attack():

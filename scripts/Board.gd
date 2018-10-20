@@ -5,7 +5,7 @@ func add_opponent_card(card_res):
 	if not next_empty_slot:
 		return false
 		
-	next_empty_slot.add_card(card_res)
+	next_empty_slot.add_card(card_res, true)
 	return true
 
 
@@ -14,7 +14,7 @@ func add_player_card(card_res):
 	if not next_empty_slot:
 		return false
 		
-	next_empty_slot.add_card(card_res)
+	next_empty_slot.add_card(card_res, false)
 	return true
 	
 
@@ -58,6 +58,16 @@ func connect_active_signal_to_all_children(logic):
 func connect_attack_signal_to_all_children(logic):
 	for child in $BoardBackground/PlayerSlots.get_children():
 		child.connect_attack_signal(logic)
+		
+
+func connect_opponent_select_signals(logic, callback):
+	for child in $BoardBackground/OpponentSlots.get_children():
+		child.connect_select_signal(logic, callback)
+
+
+func disconnect_opponent_select_signals(logic, callback):
+	for child in $BoardBackground/OpponentSlots.get_children():
+		child.disconnect_select_signal(logic, callback)
 
 
 func close_all_menus():
