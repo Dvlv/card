@@ -30,7 +30,16 @@ func get_next_empty_slot(is_opponent):
 			return board_slot
 			
 	return null
-	
+
+
+func get_opponent_card_count():
+	var count = 0
+	for board_slot in $BoardBackground/OpponentSlots.get_children():
+		if board_slot.get_card():
+			count += 1
+			
+	return count
+
 
 func connect_active_signal_to_all_children(logic):
 	for child in $BoardBackground/PlayerSlots.get_children():
@@ -38,6 +47,12 @@ func connect_active_signal_to_all_children(logic):
 	
 	for child in $BoardBackground/OpponentSlots.get_children():
 		child.connect_active_signal(logic)
+
+
+func connect_attack_signal_to_all_children(logic):
+	for child in $BoardBackground/PlayerSlots.get_children():
+		child.connect_attack_signal(logic)
+
 
 func close_all_menus():
 	for child in $BoardBackground/PlayerSlots.get_children():
