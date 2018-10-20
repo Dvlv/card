@@ -33,6 +33,11 @@ func play_card(slot):
 	$Board.add_player_card(card_in_slot.CARD_RESOURCE)
 	connect_all_board_card_reps()
 	
+	
+func do_card_battle(player_card, opp_card):
+	opp_card.take_damage(player_card.CARD_RESOURCE.POWER)
+	player_card.take_damage(opp_card.CARD_RESOURCE.POWER)
+
 
 func damage_opponent(dmg):
 	print("opponent takes ", dmg, " damage")
@@ -47,12 +52,20 @@ func on_damage_opponent(dmg):
 	damage_opponent(dmg)
 
 
-func on_declare_attack(dmg):
+func on_declare_attack(attacker_card_rep):
 	var opponent_creature_count = $Board.get_opponent_card_count() 
 	if opponent_creature_count < 1:
-		damage_opponent(dmg)
+		damage_opponent(attacker_card_rep.CARD_RESOURCE.POWER)
 	elif opponent_creature_count == 1:
-		pass  # do card battle
+		var opponent_creature_card_rep = $Board.get_opponent_only_card()
+		do_card_battle(attacker_card_rep, opponent_creature_card_rep)
 	else:
 		pass  # do opponent card selection
 		
+
+
+		
+		
+		
+func add_to_opponent_board(card_res):
+	$Board.add_opponent_card(card_res)

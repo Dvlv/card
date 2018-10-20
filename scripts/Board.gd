@@ -41,6 +41,12 @@ func get_opponent_card_count():
 	return count
 
 
+func get_opponent_only_card():
+	for board_slot in $BoardBackground/OpponentSlots.get_children():
+		if board_slot.get_card():
+			return board_slot.get_card()
+
+
 func connect_active_signal_to_all_children(logic):
 	for child in $BoardBackground/PlayerSlots.get_children():
 		child.connect_active_signal(logic)

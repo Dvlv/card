@@ -8,9 +8,11 @@ func _ready():
 	var fire = load("res://resources/Fire.tres")
 	
 	var deck = [owl, bear, bna, fire, owl, owl, owl, owl, bear, bear, bear, bear, bear, bear, bna, bna, bna, fire,
-	fire, fire, fire, fire, fire,]
+	fire]
 	
 	$MatchLogic.set_deck(deck)
 	$MatchLogic.fill_hand()
+	
+	$MatchLogic.add_to_opponent_board(owl)
 
 

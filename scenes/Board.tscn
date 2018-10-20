@@ -14,38 +14,9 @@ position = Vector2( 520, 360 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Offset", "Transform" ]
 
-[node name="PlayerSlots" type="Node2D" parent="BoardBackground" index="0"]
+[node name="OpponentSlots" type="Node2D" parent="BoardBackground" index="0"]
 
-position = Vector2( 6, 222 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="BoardSlot1" parent="BoardBackground/PlayerSlots" index="0" instance=ExtResource( 3 )]
-
-position = Vector2( 40, -150 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="BoardSlot2" parent="BoardBackground/PlayerSlots" index="1" instance=ExtResource( 3 )]
-
-position = Vector2( -145, -150 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="BoardSlot3" parent="BoardBackground/PlayerSlots" index="2" instance=ExtResource( 3 )]
-
-position = Vector2( 220, -150 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="BoardSlot4" parent="BoardBackground/PlayerSlots" index="3" instance=ExtResource( 3 )]
-
-position = Vector2( -330, -150 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="BoardSlot5" parent="BoardBackground/PlayerSlots" index="4" instance=ExtResource( 3 )]
-
-position = Vector2( 400, -150 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="OpponentSlots" type="Node2D" parent="BoardBackground" index="1"]
-
+editor/display_folded = true
 position = Vector2( 6, -222 )
 _sections_unfolded = [ "Transform" ]
 
@@ -72,6 +43,37 @@ _sections_unfolded = [ "Transform" ]
 [node name="BoardSlot5" parent="BoardBackground/OpponentSlots" index="4" instance=ExtResource( 3 )]
 
 position = Vector2( 400, 150 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="PlayerSlots" type="Node2D" parent="BoardBackground" index="1"]
+
+editor/display_folded = true
+position = Vector2( 6, 222 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="BoardSlot1" parent="BoardBackground/PlayerSlots" index="0" instance=ExtResource( 3 )]
+
+position = Vector2( 40, -150 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="BoardSlot2" parent="BoardBackground/PlayerSlots" index="1" instance=ExtResource( 3 )]
+
+position = Vector2( -145, -150 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="BoardSlot3" parent="BoardBackground/PlayerSlots" index="2" instance=ExtResource( 3 )]
+
+position = Vector2( 220, -150 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="BoardSlot4" parent="BoardBackground/PlayerSlots" index="3" instance=ExtResource( 3 )]
+
+position = Vector2( -330, -150 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="BoardSlot5" parent="BoardBackground/PlayerSlots" index="4" instance=ExtResource( 3 )]
+
+position = Vector2( 400, -150 )
 _sections_unfolded = [ "Transform" ]
 
 

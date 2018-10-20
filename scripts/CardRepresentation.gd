@@ -14,6 +14,7 @@ var my_slot = null
 onready var my_card_script_node = Node2D.new()
 
 func _ready():
+	CARD_RESOURCE = CARD_RESOURCE.duplicate()
 	$TextureButton.texture_normal = CARD_RESOURCE.CARD_IMAGE
 	
 	set_card_power_and_health()
@@ -82,7 +83,7 @@ func emit_damage_opponent():
 
 
 func emit_declare_attack():
-	emit_signal("declare_attack", CARD_RESOURCE.POWER)
+	emit_signal("declare_attack", self)
 
 
 func attack():
@@ -99,6 +100,7 @@ func take_damage(dmg):
 		if my_slot:
 			my_slot.remove_card()
 		else:
+			CARD_RESOURCE.queue_free()
 			queue_free()
 
 
