@@ -53,8 +53,8 @@ func set_card_power_and_health():
 
 
 func connect_attack_and_effect_signals():
-	if CARD_RESOURCE.CARD_NAME == "Bear":
-		var my_card_script = CARD_RESOURCE.SCRIPT_FILE
+	if CARD_RESOURCE.CARD_TYPE == CARD_RESOURCE.TYPES.Creature:
+		var my_card_script = CARD_RESOURCE.SCRIPT_FILE if CARD_RESOURCE.SCRIPT_FILE else load("res://scripts/card_functionality/card_functionality_base.gd")
 		
 		my_card_script_node.set_script(my_card_script)
 		my_card_script_node.connect("damage_opponent_card", self, "emit_damage_opponent_card")
@@ -99,10 +99,8 @@ func emit_card_selected():
 
 
 func attack():
-	if CARD_RESOURCE.SCRIPT_FILE:
+	if my_card_script_node.get_script():
 		my_card_script_node.attack()
-	else:
-		print(CARD_RESOURCE.CARD_NAME, "has no script")
 
 
 func take_damage(dmg):
