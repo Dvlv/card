@@ -94,12 +94,12 @@ func play_card():
 	emit_signal("card_played", my_slot)
 	
 	
-func emit_damage_opponent_card():
-	emit_signal("damage_opponent_card", CARD_RESOURCE.POWER)
+func emit_damage_opponent_card(dmg):
+	emit_signal("damage_opponent_card", self, dmg)
 
 
-func emit_damage_opponent():
-	emit_signal("damage_opponent", CARD_RESOURCE.POWER)
+func emit_damage_opponent(dmg):
+	emit_signal("damage_opponent", dmg)
 
 
 func emit_declare_attack():
@@ -113,6 +113,11 @@ func emit_card_selected():
 func attack():
 	if my_card_script_node.get_script():
 		my_card_script_node.attack()
+
+
+func effect():
+	if my_card_script_node.get_script():
+		my_card_script_node.effect()
 
 
 func take_damage(dmg):
