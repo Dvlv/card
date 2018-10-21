@@ -1,6 +1,11 @@
 extends Node2D
 
 
+func _ready():
+	$Opponent.connect("player_lose", self, "on_player_lose")
+	$Player.connect("player_lose", self, "on_player_lose")
+
+
 func set_deck(deck_card_resources):
 	for res in deck_card_resources:
 		$Deck.add_card(res)
@@ -48,7 +53,14 @@ func post_attack(attacking_card_rep):
 
 
 func damage_opponent(dmg):
-	print("opponent takes ", dmg, " damage")
+	$Opponent.take_dmg(dmg)
+
+
+func on_player_lose(is_opponent):
+	if is_opponent:
+		print("player_wins")
+	else:
+		print("opponent_wins")
 
 
 func on_damage_opponent_card(dmg):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/MatchLogic.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Board.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://scenes/Deck.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/FuseBox.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/Card.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=7]
 
 [node name="MatchLogic" type="Node2D"]
 
@@ -29,5 +30,16 @@ position = Vector2( 1032.17, 71.8179 )
 
 position = Vector2( 1135.91, 541.429 )
 CARD_RESOURCE = null
+
+[node name="Opponent" parent="." index="5" instance=ExtResource( 7 )]
+
+position = Vector2( 490, 112 )
+_sections_unfolded = [ "Transform" ]
+is_opponent = true
+
+[node name="Player" parent="." index="6" instance=ExtResource( 7 )]
+
+position = Vector2( 490, 590 )
+_sections_unfolded = [ "Transform" ]
 
 
