@@ -9,7 +9,6 @@
 
 [node name="CardRepresentation" type="Node2D"]
 
-editor/display_folded = true
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 CARD_RESOURCE = null
@@ -87,8 +86,6 @@ _sections_unfolded = [ "custom_constants", "custom_fonts", "custom_styles" ]
 
 [node name="HandMenu" type="Node2D" parent="." index="2"]
 
-editor/display_folded = true
-visible = false
 position = Vector2( -40, -95 )
 script = ExtResource( 4 )
 _sections_unfolded = [ "Transform" ]
@@ -129,7 +126,7 @@ size_flags_vertical = 3
 alignment = 0
 _sections_unfolded = [ "Grow Direction", "Size Flags" ]
 
-[node name="Fuse" type="Button" parent="HandMenu/Control/VBoxContainer" index="0"]
+[node name="Play" type="Button" parent="HandMenu/Control/VBoxContainer" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -148,11 +145,11 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Fuse"
+text = "Play"
 flat = false
 align = 1
 
-[node name="Play" type="Button" parent="HandMenu/Control/VBoxContainer" index="1"]
+[node name="Fuse" type="Button" parent="HandMenu/Control/VBoxContainer" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -172,7 +169,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Play"
+text = "Fuse"
 flat = false
 align = 1
 
@@ -312,6 +309,7 @@ align = 1
 
 [node name="OpponentFieldMenu" type="Node2D" parent="." index="4"]
 
+visible = false
 script = ExtResource( 6 )
 
 [node name="Control" type="Control" parent="OpponentFieldMenu" index="0"]
@@ -397,6 +395,8 @@ align = 1
 [connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]
 
 [connection signal="pressed" from="HandMenu/Control/VBoxContainer/Play" to="HandMenu" method="_on_Play_pressed"]
+
+[connection signal="pressed" from="HandMenu/Control/VBoxContainer/Fuse" to="HandMenu" method="_on_Fuse_pressed"]
 
 [connection signal="pressed" from="HandMenu/Control/VBoxContainer/Cancel" to="HandMenu" method="_on_Cancel_pressed"]
 

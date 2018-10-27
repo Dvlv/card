@@ -1,0 +1,19 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://assets/cards/cardimages/scouts.png" type="Texture" id=1]
+[ext_resource path="res://scripts/CardResource.gd" type="Script" id=2]
+
+[resource]
+
+script = ExtResource( 2 )
+_sections_unfolded = [ "Resource" ]
+CARD_NAME = "Scouts"
+CARD_IMAGE = ExtResource( 1 )
+CARD_TYPE = 0
+CARD_TEXT = "Effect: Can attack opponent for 2 instead of attacking normally."
+POWER = 4
+HP = 3
+CARD_ELEMENT = 2
+CARD_FACTION = 1
+CARD_CREATURE_TYPE = 5
+

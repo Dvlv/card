@@ -7,3 +7,12 @@ func _on_Cancel_pressed():
 
 func _on_Play_pressed():
 	get_parent().play_card()
+
+
+func _on_Fuse_pressed():
+	print("fuse pressed")
+	get_parent().add_card_to_fusebox()
+
+
+func _on_Foos_pressed():
+	print("pres")

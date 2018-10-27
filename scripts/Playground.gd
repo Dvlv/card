@@ -7,7 +7,7 @@ func _ready():
 	var bna = load("res://resources/BowAndArrow.tres")
 	var fire = load("res://resources/Fire.tres")
 	
-	var deck = [owl, bear, bear, bna, owl, fire,]
+	var deck = [owl, bear, bear, bna, owl, fire, fire, bna, fire, bna, fire, bna]
 	
 	$MatchLogic.set_deck(deck)
 	$MatchLogic.fill_hand()

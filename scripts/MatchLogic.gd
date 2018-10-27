@@ -4,6 +4,7 @@ extends Node2D
 func _ready():
 	$Opponent.connect("player_lose", self, "on_player_lose")
 	$Player.connect("player_lose", self, "on_player_lose")
+	$FuseBox.connect("card_output", self, "on_fusebox_card_output")
 
 
 func set_deck(deck_card_resources):
@@ -21,6 +22,7 @@ func fill_hand():
 func connect_all_hand_card_reps():
 	$Hand.connect_active_signal_to_all_children(self)
 	$Hand.connect_play_signal_to_all_children(self)
+	$Hand.connect_fuse_signal_to_all_children(self)
 
 
 func connect_all_board_card_reps():
@@ -41,6 +43,12 @@ func play_card(slot):
 	connect_all_board_card_reps()
 
 
+func add_card_to_fusebox(slot):
+	var card_in_slot = slot.get_card()
+	slot.remove_card()
+	$FuseBox.add_card(card_in_slot.CARD_RESOURCE)
+
+
 func do_card_battle(player_card, opp_card):
 	$Hand.close_all_menus()
 	$Board.close_all_menus()
@@ -57,6 +65,15 @@ func post_attack(attacking_card_rep):
 
 func damage_opponent(dmg):
 	$Opponent.take_dmg(dmg)
+
+
+func on_fusebox_card_output(card_res):
+	if card_res.CARD_TYPE == card_res.TYPES.Creature:
+		$Board.add_player_card(card_res)
+		connect_all_board_card_reps()
+	else:
+		$Hand.add_card(card_res, false)
+		connect_all_hand_card_reps()
 
 
 func on_player_lose(is_opponent):

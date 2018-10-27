@@ -16,3 +16,24 @@ export(int) var HP = 0
 export(ELEMENTS) var CARD_ELEMENT = ELEMENTS.Plain
 export(FACTIONS) var CARD_FACTION = FACTIONS.None
 export(CREATURE_TYPE) var CARD_CREATURE_TYPE = CREATURE_TYPE.NotCreature
+
+func get_element_adjectives():
+	return {
+	ELEMENTS.Fire: "Flaming",
+	ELEMENTS.Air: "Windy",
+	ELEMENTS.Earth: "Muddy",
+	ELEMENTS.Water: "Tidal",
+	ELEMENTS.Electricity: "Shocking",
+}
+
+
+func is_equip():
+	return CARD_TYPE == TYPES.Equip
+
+
+func is_creature():
+	return CARD_TYPE == TYPES.Creature
+
+
+func is_element():
+	return CARD_TYPE == TYPES.Element

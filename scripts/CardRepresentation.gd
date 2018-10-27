@@ -2,6 +2,7 @@ extends Node2D
 
 signal active_card
 signal card_played
+signal card_added_to_fusebox
 
 export(Resource) var CARD_RESOURCE = null
 
@@ -25,6 +26,14 @@ func _ready():
 
 func _on_TextureButton_pressed():
 	emit_signal("active_card", CARD_RESOURCE)
+	
+	if is_in_hand:
+		$HandMenu.visible = true
+		$HandMenu/Control/VBoxContainer/Play.visible = false
+
+
+func add_card_to_fusebox():
+	emit_signal("card_added_to_fusebox", my_slot)
 
 
 func set_card_power_and_health():
