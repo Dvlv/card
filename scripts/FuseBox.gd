@@ -3,17 +3,36 @@ extends Node2D
 signal card_output
 
 var CARDS = []
+var CARD_REPS = []
 
 onready var CARD_RESOURCE = preload("res://scripts/CardResource.gd")
-var adj = null
+onready var card_rep_factory = preload("res://scripts/CardRepFactory.gd")
+var adjectives = null
 
 
 func _ready():
 	$TextureButton/Menu.visible = false
-	adj = CARD_RESOURCE.get_element_adjectives()
+	adjectives = CARD_RESOURCE.get_element_adjectives()
 
-func add_card(card):
-	CARDS.append(card)
+func add_card(card_res):
+	CARDS.append(card_res)
+	var container = MarginContainer.new()
+	container.rect_min_size = Vector2(60,60)
+	
+	var rep = card_rep_factory.create(card_res)
+	rep.is_in_fusebox = true
+	rep.scale.x = 0.5
+	rep.scale.y = 0.5
+	
+	container.add_child(rep)
+	$Reps.add_child(container)
+	
+	CARD_REPS.append(rep)
+
+
+func connect_remove_signal_to_all_cards(logic):
+	for rep in CARD_REPS:
+		rep.connect_button_press_to_remove_from_fusebox(logic)
 
 func fuse():
 	while len(CARDS) > 1:
@@ -74,7 +93,7 @@ func add_element_to_creature(creature, element):
 	# Otherwise, fail, just return creature.
 	if creature.CARD_ELEMENT == CARD_RESOURCE.ELEMENTS.Plain:
 		creature.CARD_ELEMENT = element.CARD_ELEMENT
-		creature.CARD_NAME = adj[element.CARD_ELEMENT] + " " + creature.CARD_NAME
+		creature.CARD_NAME = adjectives[element.CARD_ELEMENT] + " " + creature.CARD_NAME
 	elif creature.CARD_ELEMENT == element.CARD_ELEMENT:
 		creature.POWER += 1
 	
@@ -87,7 +106,7 @@ func add_element_to_equip(equip, element):
 	# Otherwise, fail, just return equip
 	if equip.CARD_ELEMENT == CARD_RESOURCE.ELEMENTS.Plain:
 		equip.CARD_ELEMENT = element.CARD_ELEMENT
-		equip.CARD_NAME = adj[element.CARD_ELEMENT] + " " + equip.CARD_NAME
+		equip.CARD_NAME = adjectives[element.CARD_ELEMENT] + " " + equip.CARD_NAME
 	elif equip.CARD_ELEMENT == element.CARD_ELEMENT:
 		equip.POWER += 1
 		
@@ -115,9 +134,22 @@ func output(result):
 	# add result to board
 	self.CARDS = []
 	emit_signal("card_output", result)
+
+
+func remove_card(card_rep):
+	CARD_REPS.erase(card_rep)
+	CARDS.erase(card_rep.CARD_RESOURCE)
 	
-func remove_card(card):
-	CARDS.remove(card)
+	for container in $Reps.get_children():
+		if container.get_child(0) == card_rep:
+			container.queue_free()
+
+
+func clear_all_reps():
+	for container in $Reps.get_children():
+		container.queue_free()
+	
+	CARD_REPS = []
 
 
 func close_menu():
@@ -127,6 +159,7 @@ func close_menu():
 func _on_Fuse_pressed():
 	close_menu()
 	fuse()
+	clear_all_reps()
 
 
 func _on_TextureButton_pressed():

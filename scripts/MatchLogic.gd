@@ -30,6 +30,10 @@ func connect_all_board_card_reps():
 	$Board.connect_attack_signal_to_all_children(self)
 
 
+func connect_remove_to_all_fusebox_reps():
+	$FuseBox.connect_remove_signal_to_all_cards(self)
+
+
 func update_active_card(card_res):
 	$Hand.close_all_menus()
 	$Board.close_all_menus()
@@ -47,6 +51,7 @@ func add_card_to_fusebox(slot):
 	var card_in_slot = slot.get_card()
 	slot.remove_card()
 	$FuseBox.add_card(card_in_slot.CARD_RESOURCE)
+	connect_remove_to_all_fusebox_reps()
 
 
 func do_card_battle(player_card, opp_card):
@@ -66,6 +71,12 @@ func post_attack(attacking_card_rep):
 func damage_opponent(dmg):
 	$Opponent.take_dmg(dmg)
 
+
+func on_rep_removed_from_fusebox(card_rep):
+	$FuseBox.remove_card(card_rep)
+	$Hand.add_card(card_rep.CARD_RESOURCE, false)
+	connect_all_hand_card_reps()
+	card_rep.queue_free()
 
 func on_fusebox_card_output(card_res):
 	if card_res.CARD_TYPE == card_res.TYPES.Creature:

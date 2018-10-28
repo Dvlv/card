@@ -3,18 +3,21 @@ extends Node2D
 signal active_card
 signal card_played
 signal card_added_to_fusebox
+signal card_removed_from_fusebox
 
 export(Resource) var CARD_RESOURCE = null
 
 var my_slot = null
 var is_on_field = false
 var is_in_hand = false
+var is_in_fusebox = false
 var is_opponent_card = false
 
 onready var my_card_script_node = Node2D.new()
 
 func _ready():
-	CARD_RESOURCE = CARD_RESOURCE.duplicate()
+	if not is_in_fusebox:
+		CARD_RESOURCE = CARD_RESOURCE.duplicate()
 	$TextureButton.texture_normal = CARD_RESOURCE.CARD_IMAGE
 	
 	set_card_power_and_health()
@@ -30,6 +33,21 @@ func _on_TextureButton_pressed():
 	if is_in_hand:
 		$HandMenu.visible = true
 		$HandMenu/Control/VBoxContainer/Play.visible = false
+
+
+func connect_button_press_to_remove_from_fusebox(logic):
+	if $TextureButton.is_connected("pressed", self, "_on_TextureButton_pressed"):
+		$TextureButton.disconnect("pressed", self, "_on_TextureButton_pressed")
+		
+	if not $TextureButton.is_connected("pressed", self, "on_button_pressed_remove_from_fusebox"):
+		$TextureButton.connect("pressed", self, "on_button_pressed_remove_from_fusebox")
+		
+	if not is_connected("card_removed_from_fusebox", logic, "on_rep_removed_from_fusebox"):
+		connect("card_removed_from_fusebox", logic, "on_rep_removed_from_fusebox")
+
+
+func on_button_pressed_remove_from_fusebox():
+	emit_signal("card_removed_from_fusebox", self)
 
 
 func add_card_to_fusebox():

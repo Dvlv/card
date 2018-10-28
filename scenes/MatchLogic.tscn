@@ -24,7 +24,7 @@ position = Vector2( 988.748, 609.617 )
 
 [node name="FuseBox" parent="." index="3" instance=ExtResource( 5 )]
 
-position = Vector2( 1032.17, 71.8179 )
+position = Vector2( 1032.17, 120.818 )
 
 [node name="ActiveCard" parent="." index="4" instance=ExtResource( 6 )]
 

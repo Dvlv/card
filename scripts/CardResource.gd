@@ -17,7 +17,7 @@ export(ELEMENTS) var CARD_ELEMENT = ELEMENTS.Plain
 export(FACTIONS) var CARD_FACTION = FACTIONS.None
 export(CREATURE_TYPE) var CARD_CREATURE_TYPE = CREATURE_TYPE.NotCreature
 
-func get_element_adjectives():
+static func get_element_adjectives():
 	return {
 	ELEMENTS.Fire: "Flaming",
 	ELEMENTS.Air: "Windy",
