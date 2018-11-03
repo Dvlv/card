@@ -11,14 +11,38 @@ func perform_attack(my_creature, player_creatures):
 		emit_signal("opponent_attacks_face", my_creature)
 		return
 		
+	var chosen_target = null
 	var perfect_target = find_perfect_target(my_creature, player_creatures)
+	var killable = find_strongest_creature_which_can_be_killed(my_creature, player_creatures)
+	var strongest = find_strongest_player_creature(player_creatures)
+	
 	if perfect_target:
-		emit_signal("opponent_attacks_creature", my_creature, perfect_target)
+		chosen_target = perfect_target
+	elif killable:
+		chosen_target = killable
 	else:
-		var strongest = find_strongest_player_creature(player_creatures)
-		emit_signal("opponent_attacks_creature", my_creature, strongest)
+		chosen_target = strongest
+	
+	emit_signal("opponent_attacks_creature", my_creature, chosen_target)
 
 
+# find creature with highest attack that has lower health
+# than the attacker's attack
+# if two have the same attack, prioritise the one with
+# higher HP
+func find_strongest_creature_which_can_be_killed(my_creature, player_creatures):
+	var killable_creature = null
+	
+	for creature in player_creatures:
+		if creature.get_hp() <= my_creature.get_power():
+			if not killable_creature:
+				killable_creature = creature
+			else:
+				if (creature.get_power() > killable_creature.get_power() or 
+				(creature.get_power() == killable_creature and creature.get_hp() > killable_creature.get_hp())):
+					killable_creature = creature
+	
+	return killable_creature
 
 
 # A perfect target has exactly the attacker's attack as HP, and less

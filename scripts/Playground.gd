@@ -31,7 +31,6 @@ func on_player_turn_ended(turn_number):
 	else:
 		final_turn_method()
 		
-	print("opp attacks")
 	attack_with_all_creatures()
 	$MatchLogic.begin_next_turn()
 
