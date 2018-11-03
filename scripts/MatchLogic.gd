@@ -1,5 +1,9 @@
 extends Node2D
 
+signal player_turn_ended
+
+var turn_number = 1
+
 
 func _ready():
 	$Opponent.connect("player_lose", self, "on_player_lose")
@@ -45,6 +49,11 @@ func play_card(slot):
 	slot.remove_card()
 	$Board.add_player_card(card_in_slot.CARD_RESOURCE)
 	connect_all_board_card_reps()
+	hide_hand()
+
+
+func hide_hand():
+	$Hand.visible = false
 
 
 func add_card_to_fusebox(slot):
@@ -72,6 +81,16 @@ func damage_opponent(dmg):
 	$Opponent.take_dmg(dmg)
 
 
+func add_to_opponent_board(card_res):
+	$Board.add_opponent_card(card_res)
+
+
+func begin_next_turn():
+	turn_number += 1
+	fill_hand()
+	$Hand.visible = true
+
+
 func on_rep_removed_from_fusebox(card_rep):
 	$FuseBox.remove_card(card_rep)
 	$Hand.add_card(card_rep.CARD_RESOURCE, false)
@@ -82,6 +101,7 @@ func on_fusebox_card_output(card_res):
 	if card_res.CARD_TYPE == card_res.TYPES.Creature:
 		$Board.add_player_card(card_res)
 		connect_all_board_card_reps()
+		hide_hand()
 	else:
 		$Hand.add_card(card_res, false)
 		connect_all_hand_card_reps()
@@ -145,7 +165,11 @@ func on_declare_attack(attacker_card_rep):
 		$Board.connect_opponent_select_signals(self, "on_card_selected_for_attack")
 
 
+func _on_EndTurnButton_pressed():
+	emit_signal("player_turn_ended", turn_number)
 
 
-func add_to_opponent_board(card_res):
-	$Board.add_opponent_card(card_res)
+
+
+
+
