@@ -25,6 +25,13 @@ func _on_TextureButton_pressed():
 			$HandMenu.visible = true
 
 
+func get_power():
+	return CARD_RESOURCE.POWER
+	
+func get_hp():
+	return CARD_RESOURCE.HP
+
+
 func connect_attack_and_effect_signals():
 	var my_card_script = CARD_RESOURCE.SCRIPT_FILE if CARD_RESOURCE.SCRIPT_FILE else load("res://scripts/card_functionality/card_functionality_base.gd")
 	

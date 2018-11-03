@@ -10,6 +10,9 @@ var fire = preload("res://resources/Fire.tres")
 func _ready():
 	$MatchLogic.connect("player_turn_ended", self, "on_player_turn_ended")
 	
+	$AttackAI.connect("opponent_attacks_face", $MatchLogic, "on_opponent_attacks_face")
+	$AttackAI.connect("opponent_attacks_creature", $MatchLogic, "on_opponent_attacks_creature")
+	
 	
 	
 	var deck = [owl, bear, bear, bna, owl, fire, fire, bna, fire, bna, fire, bna]
@@ -28,7 +31,19 @@ func on_player_turn_ended(turn_number):
 	else:
 		final_turn_method()
 		
+	print("opp attacks")
+	attack_with_all_creatures()
 	$MatchLogic.begin_next_turn()
+
+
+func attack_with_all_creatures():
+	while $MatchLogic.get_next_active_opponent_creature():
+		var player_creatures = $MatchLogic.get_player_creatures()
+		var my_creature = $MatchLogic.get_next_active_opponent_creature()
+	
+		$AttackAI.perform_attack(my_creature, player_creatures)
+	
+
 
 
 func do_turn_1():

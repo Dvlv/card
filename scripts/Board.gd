@@ -32,6 +32,27 @@ func get_next_empty_slot(is_opponent):
 	return null
 
 
+func get_next_active_opponent_creature():
+	if get_opponent_card_count() == 0:
+		return null
+	
+	for board_slot in $BoardBackground/OpponentSlots.get_children():
+		var card = board_slot.get_card()
+		if card and not card.is_inactive:
+			return card
+	
+	return null
+
+
+func get_player_creatures():
+	var player_creatures = []
+	for board_slot in $BoardBackground/PlayerSlots.get_children():
+		if board_slot.get_card():
+			player_creatures.append(board_slot.get_card())
+	
+	return player_creatures
+
+
 func get_opponent_card_count():
 	var count = 0
 	for board_slot in $BoardBackground/OpponentSlots.get_children():
@@ -45,6 +66,16 @@ func get_opponent_only_card():
 	for board_slot in $BoardBackground/OpponentSlots.get_children():
 		if board_slot.get_card():
 			return board_slot.get_card()
+
+
+func set_all_cards_active():
+	for board_slot in $BoardBackground/OpponentSlots.get_children():
+		if board_slot.get_card():
+			board_slot.get_card().set_active()
+	
+	for board_slot in $BoardBackground/PlayerSlots.get_children():
+		if board_slot.get_card():
+			board_slot.get_card().set_active()
 
 
 func connect_active_signal_to_all_children(logic):

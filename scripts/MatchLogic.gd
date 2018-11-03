@@ -66,8 +66,8 @@ func add_card_to_fusebox(slot):
 func do_card_battle(player_card, opp_card):
 	$Hand.close_all_menus()
 	$Board.close_all_menus()
-	opp_card.take_damage(player_card.CARD_RESOURCE.POWER)
-	player_card.take_damage(opp_card.CARD_RESOURCE.POWER)
+	opp_card.take_damage(player_card.get_power())
+	player_card.take_damage(opp_card.get_power())
 
 
 func post_attack(attacking_card_rep):
@@ -80,15 +80,27 @@ func post_attack(attacking_card_rep):
 func damage_opponent(dmg):
 	$Opponent.take_dmg(dmg)
 
+func damage_player(dmg):
+	$Player.take_dmg(dmg)
+
 
 func add_to_opponent_board(card_res):
 	$Board.add_opponent_card(card_res)
 
 
 func begin_next_turn():
+	$Board.set_all_cards_active()
 	turn_number += 1
 	fill_hand()
 	$Hand.visible = true
+
+
+func get_next_active_opponent_creature():
+	return $Board.get_next_active_opponent_creature()
+
+
+func get_player_creatures():
+	return $Board.get_player_creatures()
 
 
 func on_rep_removed_from_fusebox(card_rep):
@@ -153,7 +165,7 @@ func on_card_selected_for_damage(opp_card):
 func on_declare_attack(attacker_card_rep):
 	var opponent_creature_count = $Board.get_opponent_card_count() 
 	if opponent_creature_count < 1:
-		damage_opponent(attacker_card_rep.CARD_RESOURCE.POWER)
+		damage_opponent(attacker_card_rep.get_power())
 		post_attack(attacker_card_rep)
 	elif opponent_creature_count == 1:
 		var opponent_creature_card_rep = $Board.get_opponent_only_card()
@@ -164,6 +176,15 @@ func on_declare_attack(attacker_card_rep):
 		globals.card_attacking = attacker_card_rep
 		$Board.connect_opponent_select_signals(self, "on_card_selected_for_attack")
 
+
+func on_opponent_attacks_face(creature):
+	damage_player(creature.get_power())
+	post_attack(creature)
+
+
+func on_opponent_attacks_creature(attacker, defender):
+	do_card_battle(attacker, defender)
+	post_attack(attacker)
 
 func _on_EndTurnButton_pressed():
 	emit_signal("player_turn_ended", turn_number)
