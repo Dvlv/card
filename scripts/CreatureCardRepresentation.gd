@@ -55,6 +55,13 @@ func set_active():
 	$TextureButton.modulate = "ffffff"
 
 
+func get_center_of_button():
+	var origin = $TextureButton.get_global_transform().get_origin()
+	origin.x += 70  # half sprite width
+	
+	return origin
+
+
 func play_card():
 	emit_signal("card_played", my_slot)
 	

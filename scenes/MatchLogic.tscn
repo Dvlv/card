@@ -37,7 +37,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, -200 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 0, 200 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:flip_v")
@@ -159,9 +159,9 @@ align = 1
 [node name="AttackAnim" type="Sprite" parent="." index="8"]
 
 visible = false
-position = Vector2( 520.839, 383.452 )
 texture = ExtResource( 8 )
-offset = Vector2( 0, -200 )
+offset = Vector2( 0, 200 )
+flip_v = true
 _sections_unfolded = [ "Offset", "Transform", "Visibility" ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AttackAnim" index="0"]

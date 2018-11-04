@@ -86,6 +86,7 @@ func pre_attack(attacker_card, player_is_attacker):
 func do_attack_face(attacker_card, player_is_attacker=false):
 	pre_attack(attacker_card, player_is_attacker)
 	
+	$AttackAnim.position = attacker_card.get_center_of_button()
 	attack_anim_player.connect("animation_finished", self, "post_do_attack_face")
 	
 	var anim = "backward"
@@ -106,6 +107,7 @@ func do_card_battle(attacker_card, defender_card, player_is_attacker=false):
 	pre_attack(attacker_card, player_is_attacker)
 	globals.card_defending = defender_card
 	
+	$AttackAnim.position = attacker_card.get_center_of_button()
 	attack_anim_player.connect("animation_finished", self, "post_do_battle")
 	
 	var anim = "backward"
