@@ -23,8 +23,13 @@ func set_deck(deck_card_resources):
 
 func fill_hand():
 	while $Hand.get_next_empty_slot():
-		$Hand.add_card($Deck.draw(), false)
-	connect_all_hand_card_reps()
+		var card = $Deck.draw()
+		if not card:
+			on_player_lose()
+			break
+		else:
+			$Hand.add_card(card, false)
+			connect_all_hand_card_reps()
 
 
 func connect_all_hand_card_reps():
@@ -150,8 +155,9 @@ func add_to_opponent_board(card_res):
 func begin_next_turn():
 	$Board.set_all_cards_active()
 	turn_number += 1
-	fill_hand()
 	$Hand.visible = true
+	fill_hand()
+	
 
 
 func get_next_active_opponent_creature():
@@ -178,7 +184,7 @@ func on_fusebox_card_output(card_res):
 		connect_all_hand_card_reps()
 
 
-func on_player_lose(is_opponent):
+func on_player_lose(is_opponent=false):
 	if is_opponent:
 		print("player_wins")
 	else:
