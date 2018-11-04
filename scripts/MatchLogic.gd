@@ -1,14 +1,18 @@
 extends Node2D
 
 signal player_turn_ended
+signal opponent_attack_finished
 
 var turn_number = 1
+
+onready var attack_anim_player = $AttackAnim/AnimationPlayer
 
 
 func _ready():
 	$Opponent.connect("player_lose", self, "on_player_lose")
 	$Player.connect("player_lose", self, "on_player_lose")
 	$FuseBox.connect("card_output", self, "on_fusebox_card_output")
+
 
 
 func set_deck(deck_card_resources):
@@ -44,6 +48,14 @@ func update_active_card(card_res):
 	$ActiveCard.set_new_resource(card_res)
 
 
+func disconnect_anim_player():
+	if attack_anim_player.is_connected("animation_finished", self, "post_do_attack_face"):
+		attack_anim_player.disconnect("animation_finished", self, "post_do_attack_face")
+	
+	if attack_anim_player.is_connected("animation_finished", self, "post_do_battle"):
+		attack_anim_player.disconnect("animation_finished", self, "post_do_battle")
+
+
 func play_card(slot):
 	var card_in_slot = slot.get_card()
 	slot.remove_card()
@@ -63,18 +75,63 @@ func add_card_to_fusebox(slot):
 	connect_remove_to_all_fusebox_reps()
 
 
-func do_card_battle(player_card, opp_card):
+func pre_attack(attacker_card, player_is_attacker):
 	$Hand.close_all_menus()
 	$Board.close_all_menus()
-	opp_card.take_damage(player_card.get_power())
-	player_card.take_damage(opp_card.get_power())
+	attacker_card.set_attacking_state()
+	globals.card_attacking = attacker_card
+	globals.player_is_attacker = player_is_attacker
 
 
-func post_attack(attacking_card_rep):
-	attacking_card_rep.set_inactive()
-	globals.is_in_attack_choose_state = false
-	globals.card_attacking = null
-	globals.effect_dmg = 0
+func do_attack_face(attacker_card, player_is_attacker=false):
+	pre_attack(attacker_card, player_is_attacker)
+	
+	attack_anim_player.connect("animation_finished", self, "post_do_attack_face")
+	
+	var anim = "backward"
+	
+	if player_is_attacker:
+		anim = "forward"
+	
+	$AttackAnim/AnimationPlayer.play(anim)
+
+func post_do_attack_face(anim):
+	disconnect_anim_player()
+	globals.player_defending.take_dmg(globals.card_attacking.get_power())
+
+	post_attack()
+
+
+func do_card_battle(attacker_card, defender_card, player_is_attacker=false):
+	pre_attack(attacker_card, player_is_attacker)
+	globals.card_defending = defender_card
+	
+	attack_anim_player.connect("animation_finished", self, "post_do_battle")
+	
+	var anim = "backward"
+	
+	if player_is_attacker:
+		anim = "forward"
+		
+	$AttackAnim/AnimationPlayer.play(anim)
+
+
+func post_do_battle(anim):
+	disconnect_anim_player()
+	globals.card_defending.take_damage(globals.card_attacking.get_power())
+	globals.card_attacking.take_damage(globals.card_defending.get_power())
+	
+	post_attack()
+
+
+func post_attack():
+	globals.card_attacking.set_inactive()
+	var player_attacked = globals.player_is_attacker
+	globals.reset_all()
+	
+	if not player_attacked:
+		emit_signal("opponent_attack_finished")
+
 
 
 func damage_opponent(dmg):
@@ -149,28 +206,22 @@ func on_damage_opponent(dmg):
 
 
 func on_card_selected_for_attack(opp_card):
-	do_card_battle(globals.card_attacking, opp_card)
+	do_card_battle(globals.card_attacking, opp_card, true)
 	$Board.disconnect_opponent_select_signals(self, "on_card_selected_for_attack")
-	
-	post_attack(globals.card_attacking)
-
 
 func on_card_selected_for_damage(opp_card):
 	opp_card.take_damage(globals.effect_dmg)
 	$Board.disconnect_opponent_select_signals(self, "on_card_selected_for_damage")
-	
-	post_attack(globals.card_attacking)
 
 
 func on_declare_attack(attacker_card_rep):
 	var opponent_creature_count = $Board.get_opponent_card_count() 
 	if opponent_creature_count < 1:
-		damage_opponent(attacker_card_rep.get_power())
-		post_attack(attacker_card_rep)
+		globals.player_defending = $Opponent
+		do_attack_face(attacker_card_rep, true)
 	elif opponent_creature_count == 1:
 		var opponent_creature_card_rep = $Board.get_opponent_only_card()
-		do_card_battle(attacker_card_rep, opponent_creature_card_rep)
-		post_attack(attacker_card_rep)
+		do_card_battle(attacker_card_rep, opponent_creature_card_rep, true)
 	else:
 		globals.is_in_attack_choose_state = true
 		globals.card_attacking = attacker_card_rep
@@ -178,13 +229,12 @@ func on_declare_attack(attacker_card_rep):
 
 
 func on_opponent_attacks_face(creature):
-	damage_player(creature.get_power())
-	post_attack(creature)
+	globals.player_defending = $Player
+	do_attack_face(creature, false)
 
 
 func on_opponent_attacks_creature(attacker, defender):
 	do_card_battle(attacker, defender)
-	post_attack(attacker)
 
 func _on_EndTurnButton_pressed():
 	emit_signal("player_turn_ended", turn_number)

@@ -41,6 +41,10 @@ func connect_attack_and_effect_signals():
 	my_card_script_node.connect("declare_attack", self, "emit_declare_attack")
 
 
+func set_attacking_state():
+	$TextureButton.modulate = "ff3300"
+
+
 func set_inactive():
 	is_inactive = true
 	$TextureButton.modulate = "333333"

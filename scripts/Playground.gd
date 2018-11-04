@@ -15,13 +15,13 @@ func _ready():
 	
 	
 	
-	var deck = [owl, bear, bear, bna, owl, fire, fire, bna, fire, bna, fire, bna]
+	var deck = [owl, bear, bear, bna, owl, bear, bear, bear]
 	
 	$MatchLogic.set_deck(deck)
 	$MatchLogic.fill_hand()
 	
 	$MatchLogic.add_to_opponent_board(owl)
-	$MatchLogic.add_to_opponent_board(bear)
+	#$MatchLogic.add_to_opponent_board(bear)
 
 
 func on_player_turn_ended(turn_number):
@@ -30,19 +30,22 @@ func on_player_turn_ended(turn_number):
 		call(turn_method_func)
 	else:
 		final_turn_method()
-		
+
 	attack_with_all_creatures()
-	$MatchLogic.begin_next_turn()
 
 
 func attack_with_all_creatures():
-	while $MatchLogic.get_next_active_opponent_creature():
+	if $MatchLogic.get_next_active_opponent_creature():
+		if not $MatchLogic.is_connected("opponent_attack_finished", self, "attack_with_all_creatures"):
+			$MatchLogic.connect("opponent_attack_finished", self, "attack_with_all_creatures")
+		
 		var player_creatures = $MatchLogic.get_player_creatures()
 		var my_creature = $MatchLogic.get_next_active_opponent_creature()
 	
 		$AttackAI.perform_attack(my_creature, player_creatures)
-	
-
+	else:
+		$MatchLogic.disconnect("opponent_attack_finished", self, "attack_with_all_creatures")
+		$MatchLogic.begin_next_turn()
 
 
 func do_turn_1():
