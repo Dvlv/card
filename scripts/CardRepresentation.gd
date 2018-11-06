@@ -19,7 +19,7 @@ func _ready():
 	if not is_in_fusebox:
 		CARD_RESOURCE = CARD_RESOURCE.duplicate()
 	$TextureButton.texture_normal = CARD_RESOURCE.CARD_IMAGE
-	
+
 	set_card_power_and_health()
 
 	$HandMenu.visible = false
@@ -29,7 +29,7 @@ func _ready():
 
 func _on_TextureButton_pressed():
 	emit_signal("active_card", CARD_RESOURCE)
-	
+
 	if is_in_hand:
 		$HandMenu.visible = true
 		$HandMenu/Control/VBoxContainer/Play.visible = false
@@ -38,10 +38,10 @@ func _on_TextureButton_pressed():
 func connect_button_press_to_remove_from_fusebox(logic):
 	if $TextureButton.is_connected("pressed", self, "_on_TextureButton_pressed"):
 		$TextureButton.disconnect("pressed", self, "_on_TextureButton_pressed")
-		
+
 	if not $TextureButton.is_connected("pressed", self, "on_button_pressed_remove_from_fusebox"):
 		$TextureButton.connect("pressed", self, "on_button_pressed_remove_from_fusebox")
-		
+
 	if not is_connected("card_removed_from_fusebox", logic, "on_rep_removed_from_fusebox"):
 		connect("card_removed_from_fusebox", logic, "on_rep_removed_from_fusebox")
 
@@ -59,7 +59,7 @@ func set_card_power_and_health():
 		$Info/Power.text = "P: " + str(CARD_RESOURCE.POWER)
 	else:
 		$Info/Power.text = ""
-		
+
 	if CARD_RESOURCE.HP > 0:
 		$Info/Health.text = "H: " + str(CARD_RESOURCE.HP)
 	else:

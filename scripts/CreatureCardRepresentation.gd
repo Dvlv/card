@@ -15,7 +15,7 @@ func _ready():
 
 func _on_TextureButton_pressed():
 	emit_signal("active_card", CARD_RESOURCE)
-	
+
 	if not is_inactive:
 		if is_on_field and not is_opponent_card:
 			$FieldMenu.visible = true
@@ -27,14 +27,14 @@ func _on_TextureButton_pressed():
 
 func get_power():
 	return CARD_RESOURCE.POWER
-	
+
 func get_hp():
 	return CARD_RESOURCE.HP
 
 
 func connect_attack_and_effect_signals():
 	var my_card_script = CARD_RESOURCE.SCRIPT_FILE if CARD_RESOURCE.SCRIPT_FILE else load("res://scripts/card_functionality/card_functionality_base.gd")
-	
+
 	my_card_script_node.set_script(my_card_script)
 	my_card_script_node.connect("damage_opponent_card", self, "emit_damage_opponent_card")
 	my_card_script_node.connect("damage_opponent", self, "emit_damage_opponent")
@@ -58,14 +58,14 @@ func set_active():
 func get_center_of_button():
 	var origin = $TextureButton.get_global_transform().get_origin()
 	origin.x += 70  # half sprite width
-	
+
 	return origin
 
 
 func play_card():
 	emit_signal("card_played", my_slot)
-	
-	
+
+
 func emit_damage_opponent_card(dmg):
 	emit_signal("damage_opponent_card", self, dmg)
 
@@ -76,7 +76,7 @@ func emit_damage_opponent(dmg):
 
 func emit_declare_attack():
 	emit_signal("declare_attack", self)
-	
+
 
 func emit_card_selected():
 	emit_signal("card_selected", self)

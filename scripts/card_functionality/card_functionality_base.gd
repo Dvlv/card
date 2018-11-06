@@ -9,6 +9,6 @@ signal declare_attack
 
 func attack():
 	emit_signal("declare_attack")
-	
+
 func effect():
 	pass

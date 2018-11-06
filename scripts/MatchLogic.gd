@@ -56,7 +56,7 @@ func update_active_card(card_res):
 func disconnect_anim_player():
 	if attack_anim_player.is_connected("animation_finished", self, "post_do_attack_face"):
 		attack_anim_player.disconnect("animation_finished", self, "post_do_attack_face")
-	
+
 	if attack_anim_player.is_connected("animation_finished", self, "post_do_battle"):
 		attack_anim_player.disconnect("animation_finished", self, "post_do_battle")
 
@@ -90,15 +90,15 @@ func pre_attack(attacker_card, player_is_attacker):
 
 func do_attack_face(attacker_card, player_is_attacker=false):
 	pre_attack(attacker_card, player_is_attacker)
-	
+
 	$AttackAnim.position = attacker_card.get_center_of_button()
 	attack_anim_player.connect("animation_finished", self, "post_do_attack_face")
-	
+
 	var anim = "backward"
-	
+
 	if player_is_attacker:
 		anim = "forward"
-	
+
 	$AttackAnim/AnimationPlayer.play(anim)
 
 func post_do_attack_face(anim):
@@ -111,15 +111,15 @@ func post_do_attack_face(anim):
 func do_card_battle(attacker_card, defender_card, player_is_attacker=false):
 	pre_attack(attacker_card, player_is_attacker)
 	globals.card_defending = defender_card
-	
+
 	$AttackAnim.position = attacker_card.get_center_of_button()
 	attack_anim_player.connect("animation_finished", self, "post_do_battle")
-	
+
 	var anim = "backward"
-	
+
 	if player_is_attacker:
 		anim = "forward"
-		
+
 	$AttackAnim/AnimationPlayer.play(anim)
 
 
@@ -127,7 +127,7 @@ func post_do_battle(anim):
 	disconnect_anim_player()
 	globals.card_defending.take_damage(globals.card_attacking.get_power())
 	globals.card_attacking.take_damage(globals.card_defending.get_power())
-	
+
 	post_attack()
 
 
@@ -135,7 +135,7 @@ func post_attack():
 	globals.card_attacking.set_inactive()
 	var player_attacked = globals.player_is_attacker
 	globals.reset_all()
-	
+
 	if not player_attacked:
 		emit_signal("opponent_attack_finished")
 
@@ -157,7 +157,7 @@ func begin_next_turn():
 	turn_number += 1
 	$Hand.visible = true
 	fill_hand()
-	
+
 
 
 func get_next_active_opponent_creature():
@@ -174,7 +174,7 @@ func on_rep_removed_from_fusebox(card_rep):
 	connect_all_hand_card_reps()
 	card_rep.queue_free()
 
-func on_fusebox_card_output(card_res):
+func on_fusebox_card_output(card_res, fuse_happened):
 	if card_res.CARD_TYPE == card_res.TYPES.Creature:
 		$Board.add_player_card(card_res)
 		connect_all_board_card_reps()
@@ -182,6 +182,11 @@ func on_fusebox_card_output(card_res):
 	else:
 		$Hand.add_card(card_res, false)
 		connect_all_hand_card_reps()
+
+	if fuse_happened:
+		print("fuse successful")
+	else:
+		print("no fusion occurred")
 
 
 func on_player_lose(is_opponent=false):
@@ -195,7 +200,7 @@ func on_damage_opponent_card(attacker_card_rep, dmg):
 	$Hand.close_all_menus()
 	$Board.close_all_menus()
 
-	var opponent_creature_count = $Board.get_opponent_card_count() 
+	var opponent_creature_count = $Board.get_opponent_card_count()
 	if opponent_creature_count < 1:
 		print("no card to damage")
 	elif opponent_creature_count == 1:
@@ -223,7 +228,7 @@ func on_card_selected_for_damage(opp_card):
 
 
 func on_declare_attack(attacker_card_rep):
-	var opponent_creature_count = $Board.get_opponent_card_count() 
+	var opponent_creature_count = $Board.get_opponent_card_count()
 	if opponent_creature_count < 1:
 		globals.player_defending = $Opponent
 		do_attack_face(attacker_card_rep, true)
