@@ -9,7 +9,12 @@ onready var CARD_RESOURCE = preload("res://CardResource.tres")
 
 func specific_creature_creature_fusions(creature_one, creature_two):
 	# Alphabetise the two creatures for convenience?
-	pass
+	var card_to_create = null
+
+	if creature.CARD_NAME.to_lower() == "small fox" and creature.CARD_NAME.to_lower() == "small fox":
+		card_to_create = "FierceFox"
+
+	return make_card_to_create(card_to_create)
 
 
 func specific_creature_element_fusions(creature, element):

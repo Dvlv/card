@@ -78,18 +78,43 @@ func fuse_two_equips(equip_one, equip_two):
 	# Fusing two equips does not work unless specific.
 	var result = specific_fusions.specific_equip_equip_fusions(equip_one, equip_two)
 
-	if not result:
+	if result:
+		FUSE_HAPPENED
+	else:
 		result = equip_two
 
 	CARDS.push_front(result)
 
 
 func fuse_two_creatures(creature_one, creature_two):
-	var result = creature_two
+	var result = specific_fusions.specific_creature_creature_fusions(creature_one, creature_two)
 
+	if result:
+		FUSE_HAPPENED = true
+		return CARDS.push_front(result)
+	else:
+		result = creature_two
+
+	# Bird + Bear = Scouts
 	if ((creature_one.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Bird and creature_two.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Bear) or
 	(creature_two.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Bird and creature_one.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Bear)):
 		result = load("res://resources/Scouts.tres")
+		FUSE_HAPPENED = true
+
+	# Fish + Electric = Electric Eel
+	elif ((creature_one.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Fish and creature_two.CARD_ELEMENT == CARD_RESOURCE.CARD_ELEMENT.Electricity) or
+	(creature_two.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Fish and creature_one.CARD_ELEMENT == CARD_RESOURCE.CARD_ELEMENT.Electricity)):
+		result = load("res://resources/ElectricEel.tres")
+		FUSE_HAPPENED = true
+
+	# Human x 2 = Family
+	elif creature_one.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Human and creature_two.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Human:
+		result = load("res://resources/Family.tres")
+		FUSE_HAPPENED = true
+
+	# Fish x 2 = Sharp Shark
+	elif creature_one.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Fish and creature_two.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Fish:
+		result = load("res://resources/SharpShark.tres")
 		FUSE_HAPPENED = true
 
 	CARDS.push_front(result)
@@ -101,6 +126,7 @@ func add_element_to_creature(creature, element):
 	# Otherwise, fail, just return creature.
 	var result = specific_fusions.specific_creature_element_fusions(creature, element)
 	if result:
+		FUSE_HAPPENED = true
 		return CARDS.push_front(result)
 
 	if creature.CARD_ELEMENT == CARD_RESOURCE.ELEMENTS.Plain:
@@ -135,6 +161,7 @@ func equip_creature(creature, equip):
 	# Add equip's stats to creature
 	var result = specific_fusions.specific_creature_equip_fusions(creature, equip)
 	if result:
+		FUSE_HAPPENED = true
 		return CARDS.push_front(result)
 
 	if equip.CARD_ELEMENT != CARD_RESOURCE.ELEMENTS.Plain:
