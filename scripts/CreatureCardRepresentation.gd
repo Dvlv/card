@@ -11,6 +11,7 @@ var is_inactive = false
 
 func _ready():
 	connect_attack_and_effect_signals()
+	hide_effect_if_none()
 
 
 func _on_TextureButton_pressed():
@@ -39,6 +40,14 @@ func connect_attack_and_effect_signals():
 	my_card_script_node.connect("damage_opponent_card", self, "emit_damage_opponent_card")
 	my_card_script_node.connect("damage_opponent", self, "emit_damage_opponent")
 	my_card_script_node.connect("declare_attack", self, "emit_declare_attack")
+	my_card_script_node.connect("go_inactive", self, "set_inactive")
+
+	my_card_script_node._ready()
+
+
+func hide_effect_if_none():
+	if my_card_script_node.get_script() and not my_card_script_node.has_effect:
+		$FieldMenu/Control/VBoxContainer/Effect.visible = false
 
 
 func set_attacking_state():
@@ -71,7 +80,7 @@ func emit_damage_opponent_card(dmg):
 
 
 func emit_damage_opponent(dmg):
-	emit_signal("damage_opponent", dmg)
+	emit_signal("damage_opponent", self, dmg)
 
 
 func emit_declare_attack():
@@ -87,9 +96,24 @@ func attack():
 		my_card_script_node.attack()
 
 
+func post_attack():
+	if my_card_script_node.get_script():
+		my_card_script_node.post_attack()
+
+	set_inactive()
+
+
 func effect():
 	if my_card_script_node.get_script():
 		my_card_script_node.effect()
+
+
+func post_effect():
+	if my_card_script_node.get_script():
+		my_card_script_node.post_effect()
+
+
+
 
 
 func take_damage(dmg):

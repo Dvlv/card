@@ -18,23 +18,6 @@ func set_up():
 	_set_card_background()
 	_hide_nums_if_needed()
 
-func move_to_fuse_box():
-	pass
-
-func on_play():
-	pass
-
-func on_destroy():
-	pass
-
-func on_attack():
-	pass
-
-func on_receive_damage():
-	pass
-
-func on_attacked():
-	pass
 
 func set_new_resource(card_res):
 	CARD_RESOURCE = card_res

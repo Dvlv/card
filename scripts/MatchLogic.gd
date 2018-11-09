@@ -132,13 +132,17 @@ func post_do_battle(anim):
 
 
 func post_attack():
-	globals.card_attacking.set_inactive()
+	globals.card_attacking.post_attack()
 	var player_attacked = globals.player_is_attacker
 	globals.reset_all()
 
 	if not player_attacked:
 		emit_signal("opponent_attack_finished")
 
+
+func post_effect():
+	globals.card_attacking.post_effect()
+	globals.reset_all()
 
 
 func damage_opponent(dmg):
@@ -206,7 +210,7 @@ func on_damage_opponent_card(attacker_card_rep, dmg):
 	elif opponent_creature_count == 1:
 		var opponent_creature_card_rep = $Board.get_opponent_only_card()
 		opponent_creature_card_rep.take_damage(dmg)
-		post_attack(attacker_card_rep)
+		post_effect(attacker_card_rep)
 	else:
 		globals.is_in_attack_choose_state = true
 		globals.card_attacking = attacker_card_rep
@@ -214,8 +218,13 @@ func on_damage_opponent_card(attacker_card_rep, dmg):
 		$Board.connect_opponent_select_signals(self, "on_card_selected_for_damage")
 
 
-func on_damage_opponent(dmg):
+func on_damage_opponent(card_using_effect, dmg):
+	$Hand.close_all_menus()
+	$Board.close_all_menus()
+
+	globals.card_attacking = card_using_effect
 	damage_opponent(dmg)
+	post_effect()
 
 
 func on_card_selected_for_attack(opp_card):
@@ -225,6 +234,8 @@ func on_card_selected_for_attack(opp_card):
 func on_card_selected_for_damage(opp_card):
 	opp_card.take_damage(globals.effect_dmg)
 	$Board.disconnect_opponent_select_signals(self, "on_card_selected_for_damage")
+	post_effect()
+
 
 
 func on_declare_attack(attacker_card_rep):

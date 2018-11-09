@@ -8,7 +8,7 @@ var FUSE_HAPPENED = false
 
 onready var CARD_RESOURCE = preload("res://scripts/CardResource.gd")
 onready var card_rep_factory = preload("res://scripts/CardRepFactory.gd")
-onready var specific_fusions = preload("res://scripts/SpecificFusions.gd")
+onready var specific_fusions = preload("res://scripts/SpecificFusions.gd").new()
 var adjectives = null
 
 

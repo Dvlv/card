@@ -5,4 +5,4 @@ func _ready():
 
 
 func effect():
-	emit_signal("damage_opponent_card", 5)
+	emit_signal("damage_opponent", 2)

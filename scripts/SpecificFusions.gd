@@ -11,7 +11,7 @@ func specific_creature_creature_fusions(creature_one, creature_two):
 	# Alphabetise the two creatures for convenience?
 	var card_to_create = null
 
-	if creature.CARD_NAME.to_lower() == "small fox" and creature.CARD_NAME.to_lower() == "small fox":
+	if creature_one.CARD_NAME.to_lower() == "small fox" and creature_two.CARD_NAME.to_lower() == "small fox":
 		card_to_create = "FierceFox"
 
 	return make_card_to_create(card_to_create)
