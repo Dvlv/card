@@ -46,7 +46,8 @@ func attack_with_all_creatures():
 
 		$AttackAI.perform_attack(my_creature, player_creatures)
 	else:
-		$MatchLogic.disconnect("opponent_attack_finished", self, "attack_with_all_creatures")
+		if $MatchLogic.is_connected("opponent_attack_finished", self, "attack_with_all_creatures"):
+			$MatchLogic.disconnect("opponent_attack_finished", self, "attack_with_all_creatures")
 		$MatchLogic.begin_next_turn()
 
 

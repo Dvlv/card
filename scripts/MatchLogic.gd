@@ -267,6 +267,7 @@ func on_buff_same_element(card_effecting, element, power, hp):
 	$Board.buff_same_element(element, power, hp)
 	post_effect()
 
+
 func _on_EndTurnButton_pressed():
 	emit_signal("player_turn_ended", turn_number)
 
