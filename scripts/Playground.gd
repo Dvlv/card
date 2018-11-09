@@ -6,6 +6,7 @@ var bear = preload("res://resources/Bear.tres")
 var bna = preload("res://resources/BowAndArrow.tres")
 var fire = preload("res://resources/Fire.tres")
 var fire_dragon = preload("res://resources/FireDragon.tres")
+var electric_dragon = preload("res://resources/ElectricDragon.tres")
 
 
 func _ready():
@@ -16,13 +17,13 @@ func _ready():
 
 
 
-	var deck = [owl, bear, bear, bna, fire, fire_dragon, fire_dragon, fire_dragon, fire_dragon]
+	var deck = [owl, bear, bear, bna, electric_dragon, electric_dragon, electric_dragon, electric_dragon]
 
 	$MatchLogic.set_deck(deck)
 	$MatchLogic.fill_hand()
 
-	$MatchLogic.add_to_opponent_board(owl)
-	$MatchLogic.add_to_opponent_board(bear)
+	#$MatchLogic.add_to_opponent_board(owl)
+	#$MatchLogic.add_to_opponent_board(bear)
 
 
 func on_player_turn_ended(turn_number):

@@ -113,6 +113,11 @@ func add_card():
 	print("Do not use add_card for the board, use add_opponent_card or add_player_card")
 
 
+func buff_same_element(element, power, hp):
+	for child in $BoardBackground/PlayerSlots.get_children():
+		child.buff_same_element(element, power, hp)
+
+
 func _on_Button_pressed():
 	var hand = $Hand
 	var owl_card_scene = load("res://scenes/creaturecards/Owl.tscn")

@@ -4,6 +4,7 @@ signal card_selected
 signal damage_opponent_card
 signal damage_opponent
 signal declare_attack
+signal buff_same_element
 
 
 var is_inactive = false
@@ -40,6 +41,7 @@ func connect_attack_and_effect_signals():
 	my_card_script_node.connect("damage_opponent_card", self, "emit_damage_opponent_card")
 	my_card_script_node.connect("damage_opponent", self, "emit_damage_opponent")
 	my_card_script_node.connect("declare_attack", self, "emit_declare_attack")
+	my_card_script_node.connect("buff_same_element", self, "emit_buff_same_element")
 	my_card_script_node.connect("go_inactive", self, "set_inactive")
 
 	my_card_script_node._ready()
@@ -61,7 +63,16 @@ func set_inactive():
 
 func set_active():
 	is_inactive = false
+	show_effect_button()
 	$TextureButton.modulate = "ffffff"
+
+
+func hide_effect_button():
+	$FieldMenu/Control/VBoxContainer/Effect.visible = false
+
+
+func show_effect_button():
+	$FieldMenu/Control/VBoxContainer/Effect.visible = true
 
 
 func get_center_of_button():
@@ -91,6 +102,10 @@ func emit_card_selected():
 	emit_signal("card_selected", self)
 
 
+func emit_buff_same_element(power, hp):
+	emit_signal("buff_same_element", self, self.CARD_RESOURCE.CARD_ELEMENT, power, hp)
+
+
 func attack():
 	if my_card_script_node.get_script():
 		my_card_script_node.attack()
@@ -112,8 +127,14 @@ func post_effect():
 	if my_card_script_node.get_script():
 		my_card_script_node.post_effect()
 
+	hide_effect_button()
 
 
+func buff(power, hp):
+	CARD_RESOURCE.POWER += power
+	CARD_RESOURCE.HP += hp
+
+	set_card_power_and_health()
 
 
 func take_damage(dmg):

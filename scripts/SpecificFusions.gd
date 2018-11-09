@@ -50,7 +50,7 @@ func specific_equip_equip_fusions(equip_one, equip_two):
 func specific_creature_equip_fusions(creature, equip):
 	var card_to_create = null
 
-	if creature.CARD_CREATURE_TYPE == CARD_RESOURCE.TYPES.Bear and equip.CARD_NAME.to_lower() == "food":
+	if creature.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Bear and equip.CARD_NAME.to_lower() == "food":
 		card_to_create = "SleepyBear"
 
 	return make_card_to_create(card_to_create)

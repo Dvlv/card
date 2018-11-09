@@ -141,7 +141,7 @@ func post_attack():
 
 
 func post_effect():
-	globals.card_attacking.post_effect()
+	globals.card_effecting.post_effect()
 	globals.reset_all()
 
 
@@ -208,12 +208,13 @@ func on_damage_opponent_card(attacker_card_rep, dmg):
 	if opponent_creature_count < 1:
 		print("no card to damage")
 	elif opponent_creature_count == 1:
+		globals.card_effecting = attacker_card_rep
 		var opponent_creature_card_rep = $Board.get_opponent_only_card()
 		opponent_creature_card_rep.take_damage(dmg)
-		post_effect(attacker_card_rep)
+		post_effect()
 	else:
 		globals.is_in_attack_choose_state = true
-		globals.card_attacking = attacker_card_rep
+		globals.card_effecting = attacker_card_rep
 		globals.effect_dmg = dmg
 		$Board.connect_opponent_select_signals(self, "on_card_selected_for_damage")
 
@@ -221,8 +222,7 @@ func on_damage_opponent_card(attacker_card_rep, dmg):
 func on_damage_opponent(card_using_effect, dmg):
 	$Hand.close_all_menus()
 	$Board.close_all_menus()
-
-	globals.card_attacking = card_using_effect
+	globals.card_effecting = card_using_effect
 	damage_opponent(dmg)
 	post_effect()
 
@@ -259,6 +259,13 @@ func on_opponent_attacks_face(creature):
 
 func on_opponent_attacks_creature(attacker, defender):
 	do_card_battle(attacker, defender)
+
+
+func on_buff_same_element(card_effecting, element, power, hp):
+	$Board.close_all_menus()
+	globals.card_effecting = card_effecting
+	$Board.buff_same_element(element, power, hp)
+	post_effect()
 
 func _on_EndTurnButton_pressed():
 	emit_signal("player_turn_ended", turn_number)

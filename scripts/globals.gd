@@ -6,6 +6,7 @@ var card_defending = null
 var player_defending = null
 var effect_dmg = 0
 var player_is_attacker = false
+var card_effecting = null
 
 func reset_all():
 	is_in_attack_choose_state = false
@@ -14,3 +15,4 @@ func reset_all():
 	player_defending = null
 	effect_dmg = 0
 	player_is_attacker = false
+	card_effecting = null
