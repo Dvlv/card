@@ -102,13 +102,13 @@ func fuse_two_creatures(creature_one, creature_two):
 		FUSE_HAPPENED = true
 
 	# Fish + Electric = Electric Eel
-	elif ((creature_one.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Fish and creature_two.CARD_ELEMENT == CARD_RESOURCE.CARD_ELEMENT.Electricity) or
-	(creature_two.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Fish and creature_one.CARD_ELEMENT == CARD_RESOURCE.CARD_ELEMENT.Electricity)):
+	elif ((creature_one.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Fish and creature_two.CARD_ELEMENT == CARD_RESOURCE.ELEMENTS.Electricity) or
+	(creature_two.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Fish and creature_one.CARD_ELEMENT == CARD_RESOURCE.ELEMENTS.Electricity)):
 		result = load("res://resources/ElectricEel.tres")
 		FUSE_HAPPENED = true
 
 	# Human x 2 = Family
-	elif creature_one.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Human and creature_two.CARD_CREATURE_TYPE == CARD_RESOURCE.CREATURE_TYPE.Human:
+	elif creature_one.CARD_FACTION == CARD_RESOURCE.FACTIONS.Human and creature_two.CARD_FACTION == CARD_RESOURCE.FACTIONS.Human:
 		result = load("res://resources/Family.tres")
 		FUSE_HAPPENED = true
 

@@ -7,6 +7,7 @@ var bna = preload("res://resources/BowAndArrow.tres")
 var fire = preload("res://resources/Fire.tres")
 var fire_dragon = preload("res://resources/FireDragon.tres")
 var electric_dragon = preload("res://resources/ElectricDragon.tres")
+var friendly_fish = preload("res://resources/FriendlyFish.tres")
 
 
 func _ready():
@@ -17,7 +18,7 @@ func _ready():
 
 
 
-	var deck = [owl, bear, bear, bna, electric_dragon, electric_dragon, electric_dragon, electric_dragon]
+	var deck = [owl, friendly_fish, friendly_fish, friendly_fish, friendly_fish, friendly_fish, friendly_fish, electric_dragon]
 
 	$MatchLogic.set_deck(deck)
 	$MatchLogic.fill_hand()

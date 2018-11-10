@@ -5,6 +5,7 @@ signal damage_opponent_card
 signal damage_opponent
 signal declare_attack
 signal buff_same_element
+signal heal_self
 
 
 var is_inactive = false
@@ -42,6 +43,7 @@ func connect_attack_and_effect_signals():
 	my_card_script_node.connect("damage_opponent", self, "emit_damage_opponent")
 	my_card_script_node.connect("declare_attack", self, "emit_declare_attack")
 	my_card_script_node.connect("buff_same_element", self, "emit_buff_same_element")
+	my_card_script_node.connect("heal_self", self, "emit_heal_self")
 	my_card_script_node.connect("go_inactive", self, "set_inactive")
 
 	my_card_script_node._ready()
@@ -49,6 +51,8 @@ func connect_attack_and_effect_signals():
 
 func hide_effect_if_none():
 	if my_card_script_node.get_script() and not my_card_script_node.has_effect:
+		$FieldMenu/Control/VBoxContainer/Effect.visible = false
+	elif not my_card_script_node.get_script():
 		$FieldMenu/Control/VBoxContainer/Effect.visible = false
 
 
@@ -104,6 +108,10 @@ func emit_card_selected():
 
 func emit_buff_same_element(power, hp):
 	emit_signal("buff_same_element", self, self.CARD_RESOURCE.CARD_ELEMENT, power, hp)
+
+
+func emit_heal_self(healing):
+	emit_signal("heal_self", self, healing)
 
 
 func attack():

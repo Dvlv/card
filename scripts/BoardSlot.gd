@@ -17,6 +17,9 @@ func connect_attack_signal(logic):
 	if my_card and not my_card.is_connected("buff_same_element", logic, "on_buff_same_element"):
 		my_card.connect("buff_same_element", logic, "on_buff_same_element")
 
+	if my_card and not my_card.is_connected("heal_self", logic, "on_heal_self"):
+		my_card.connect("heal_self", logic, "on_heal_self")
+
 
 func connect_select_signal(logic, callback):
 	if my_card and not my_card.is_connected("card_selected", logic, callback):

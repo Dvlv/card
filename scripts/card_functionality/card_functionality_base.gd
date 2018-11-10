@@ -7,6 +7,7 @@ signal select_opponent_card
 signal select_own_card
 signal declare_attack
 signal buff_same_element
+signal heal_self
 signal go_inactive
 
 var has_effect = false

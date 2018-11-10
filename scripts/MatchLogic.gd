@@ -5,8 +5,6 @@ signal opponent_attack_finished
 
 var turn_number = 1
 
-onready var attack_anim_player = $AttackAnim/AnimationPlayer
-
 
 func _ready():
 	$Opponent.connect("player_lose", self, "on_player_lose")
@@ -53,12 +51,8 @@ func update_active_card(card_res):
 	$ActiveCard.set_new_resource(card_res)
 
 
-func disconnect_anim_player():
-	if attack_anim_player.is_connected("animation_finished", self, "post_do_attack_face"):
-		attack_anim_player.disconnect("animation_finished", self, "post_do_attack_face")
-
-	if attack_anim_player.is_connected("animation_finished", self, "post_do_battle"):
-		attack_anim_player.disconnect("animation_finished", self, "post_do_battle")
+func disconnect_anim_handler_attack():
+	$MatchAnimationHandler.disconnect_attack(self)
 
 
 func play_card(slot):
@@ -91,18 +85,13 @@ func pre_attack(attacker_card, player_is_attacker):
 func do_attack_face(attacker_card, player_is_attacker=false):
 	pre_attack(attacker_card, player_is_attacker)
 
-	$AttackAnim.position = attacker_card.get_center_of_button()
-	attack_anim_player.connect("animation_finished", self, "post_do_attack_face")
+	var anim = "forward" if player_is_attacker else "backward"
 
-	var anim = "backward"
+	$MatchAnimationHandler.position_connect_play_attack(attacker_card.get_center_of_button(), self, "post_do_attack_face", anim)
 
-	if player_is_attacker:
-		anim = "forward"
-
-	$AttackAnim/AnimationPlayer.play(anim)
 
 func post_do_attack_face(anim):
-	disconnect_anim_player()
+	disconnect_anim_handler_attack()
 	globals.player_defending.take_dmg(globals.card_attacking.get_power())
 
 	post_attack()
@@ -112,19 +101,13 @@ func do_card_battle(attacker_card, defender_card, player_is_attacker=false):
 	pre_attack(attacker_card, player_is_attacker)
 	globals.card_defending = defender_card
 
-	$AttackAnim.position = attacker_card.get_center_of_button()
-	attack_anim_player.connect("animation_finished", self, "post_do_battle")
+	var anim = "forward" if player_is_attacker else "backward"
 
-	var anim = "backward"
-
-	if player_is_attacker:
-		anim = "forward"
-
-	$AttackAnim/AnimationPlayer.play(anim)
+	$MatchAnimationHandler.position_connect_play_attack(attacker_card.get_center_of_button(), self, "post_do_battle", anim)
 
 
 func post_do_battle(anim):
-	disconnect_anim_player()
+	disconnect_anim_handler_attack()
 	globals.card_defending.take_damage(globals.card_attacking.get_power())
 	globals.card_attacking.take_damage(globals.card_defending.get_power())
 
@@ -138,6 +121,11 @@ func post_attack():
 
 	if not player_attacked:
 		emit_signal("opponent_attack_finished")
+
+
+func pre_effect(card_effecting):
+	globals.card_effecting = card_effecting
+	$Board.close_all_menus()
 
 
 func post_effect():
@@ -186,6 +174,8 @@ func on_fusebox_card_output(card_res, fuse_happened):
 	else:
 		$Hand.add_card(card_res, false)
 		connect_all_hand_card_reps()
+
+	update_active_card(card_res)
 
 	if fuse_happened:
 		print("fuse successful")
@@ -262,9 +252,14 @@ func on_opponent_attacks_creature(attacker, defender):
 
 
 func on_buff_same_element(card_effecting, element, power, hp):
-	$Board.close_all_menus()
-	globals.card_effecting = card_effecting
+	pre_effect(card_effecting)
 	$Board.buff_same_element(element, power, hp)
+	post_effect()
+
+
+func on_heal_self(card_effecting, healing):
+	pre_effect(card_effecting)
+	$Player.heal(healing)
 	post_effect()
 
 
