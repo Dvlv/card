@@ -20,7 +20,7 @@ func _on_TextureButton_pressed():
 	emit_signal("active_card", CARD_RESOURCE)
 
 	if not is_inactive:
-		if is_on_field and not is_opponent_card:
+		if is_on_field and not is_opponent_card and not globals.get_turn_number() == 1:
 			$FieldMenu.visible = true
 		elif is_on_field and is_opponent_card and globals.is_in_attack_choose_state:
 			$OpponentFieldMenu.visible = true

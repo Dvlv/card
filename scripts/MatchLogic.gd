@@ -3,7 +3,7 @@ extends Node2D
 signal player_turn_ended
 signal opponent_attack_finished
 
-var turn_number = 1
+export var turn_number = 1
 
 
 func _ready():
@@ -229,6 +229,10 @@ func on_card_selected_for_damage(opp_card):
 
 
 func on_declare_attack(attacker_card_rep):
+	if turn_number == 1:
+		print("Cannot attack turn one!")
+		return
+
 	var opponent_creature_count = $Board.get_opponent_card_count()
 	if opponent_creature_count < 1:
 		globals.player_defending = $Opponent

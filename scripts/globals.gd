@@ -16,3 +16,10 @@ func reset_all():
 	effect_dmg = 0
 	player_is_attacker = false
 	card_effecting = null
+
+
+func get_turn_number():
+	var logic = get_tree().get_root().find_node("MatchLogic", true, false)
+	
+	return logic.turn_number
+	

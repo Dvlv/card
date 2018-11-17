@@ -10,6 +10,8 @@ script = ExtResource( 1 )
 
 [node name="MatchLogic" parent="." index="0" instance=ExtResource( 2 )]
 
+turn_number = 1
+
 [node name="AttackAI" parent="." index="1" instance=ExtResource( 3 )]
 
 
