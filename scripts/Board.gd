@@ -18,7 +18,7 @@ func add_player_card(card_res):
 	return next_empty_slot
 
 
-func get_next_empty_slot(is_opponent):
+func get_next_empty_slot(is_opponent=false):
 	var slots_container = null
 	if is_opponent:
 		slots_container = $BoardBackground/OpponentSlots
@@ -109,7 +109,7 @@ func close_all_menus():
 		child.close_card_menu()
 
 
-func add_card():
+func add_card(is_opponent, card_rep):
 	print("Do not use add_card for the board, use add_opponent_card or add_player_card")
 
 

@@ -34,4 +34,6 @@ func connect_active_signal(logic):
 		my_card.connect("active_card", logic, "update_active_card")
 
 
-
+# Override pls
+func set_location(card_rep):
+	pass
