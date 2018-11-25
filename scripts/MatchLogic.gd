@@ -58,7 +58,9 @@ func disconnect_anim_handler_attack():
 func play_card(slot):
 	var card_in_slot = slot.get_card()
 	slot.remove_card()
-	$Board.add_player_card(card_in_slot.CARD_RESOURCE)
+	var empty_slot = $Board.add_player_card(card_in_slot.CARD_RESOURCE)
+	print(empty_slot.get_card())
+	empty_slot.get_card().animate_move(Vector2(0, 250), Vector2(0,0))
 	connect_all_board_card_reps()
 	hide_hand()
 

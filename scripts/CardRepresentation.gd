@@ -35,6 +35,11 @@ func _on_TextureButton_pressed():
 		$HandMenu/Control/VBoxContainer/Play.visible = false
 
 
+func animate_move(from, to, time=0.3):
+	$Tween.interpolate_property(self, "position", from, to, time, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
+
+
 func connect_button_press_to_remove_from_fusebox(logic):
 	if $TextureButton.is_connected("pressed", self, "_on_TextureButton_pressed"):
 		$TextureButton.disconnect("pressed", self, "_on_TextureButton_pressed")

@@ -15,7 +15,7 @@ func add_player_card(card_res):
 		return false
 
 	next_empty_slot.add_card(card_res, false)
-	return true
+	return next_empty_slot
 
 
 func get_next_empty_slot(is_opponent):

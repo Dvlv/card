@@ -37,6 +37,7 @@ _sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Material", "Size F
 
 [node name="Info" type="Sprite" parent="." index="1"]
 
+editor/display_folded = true
 position = Vector2( -38.0041, 43.441 )
 texture = ExtResource( 3 )
 _sections_unfolded = [ "Transform" ]
@@ -86,6 +87,7 @@ _sections_unfolded = [ "custom_constants", "custom_fonts", "custom_styles" ]
 
 [node name="HandMenu" type="Node2D" parent="." index="2"]
 
+editor/display_folded = true
 position = Vector2( -40, -95 )
 script = ExtResource( 4 )
 _sections_unfolded = [ "Transform" ]
@@ -200,6 +202,7 @@ align = 1
 
 [node name="FieldMenu" type="Node2D" parent="." index="3"]
 
+editor/display_folded = true
 visible = false
 position = Vector2( -40, -95 )
 script = ExtResource( 5 )
@@ -310,6 +313,7 @@ align = 1
 
 [node name="OpponentFieldMenu" type="Node2D" parent="." index="4"]
 
+editor/display_folded = true
 visible = false
 script = ExtResource( 6 )
 
@@ -392,6 +396,16 @@ group = null
 text = "Cancel"
 flat = false
 align = 1
+
+[node name="Tween" type="Tween" parent="." index="5"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+_sections_unfolded = [ "playback" ]
 
 [connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]
 
