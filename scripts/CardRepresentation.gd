@@ -40,6 +40,16 @@ func animate_move(from, to, time=0.3):
 	$Tween.start()
 
 
+func connect_tween_finished(callback_target, callback):
+	if not $Tween.is_connected("tween_completed", callback_target, callback):
+		$Tween.connect("tween_completed", callback_target, callback)
+
+
+func disconnect_tween_finished(callback_target, callback):
+	if $Tween.is_connected("tween_completed", callback_target, callback):
+		$Tween.disconnect("tween_completed", callback_target, callback)
+
+
 func connect_button_press_to_remove_from_fusebox(logic):
 	if $TextureButton.is_connected("pressed", self, "_on_TextureButton_pressed"):
 		$TextureButton.disconnect("pressed", self, "_on_TextureButton_pressed")

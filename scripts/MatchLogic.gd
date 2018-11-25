@@ -59,7 +59,6 @@ func play_card(slot):
 	var card_in_slot = slot.get_card()
 	slot.remove_card()
 	var empty_slot = $Board.add_player_card(card_in_slot.CARD_RESOURCE)
-	print(empty_slot.get_card())
 	empty_slot.get_card().animate_move(Vector2(0, 250), Vector2(0,0))
 	connect_all_board_card_reps()
 	hide_hand()
@@ -142,8 +141,13 @@ func damage_player(dmg):
 	$Player.take_dmg(dmg)
 
 
-func add_to_opponent_board(card_res):
-	$Board.add_opponent_card(card_res)
+func add_to_opponent_board(opponent_controller, card_res):
+	var slot = $Board.add_opponent_card(card_res)
+	var card_rep = slot.get_card()
+	card_rep.connect_tween_finished(opponent_controller, "post_summon")
+	card_rep.animate_move(Vector2(0, -250), Vector2(0, 0))
+
+	return card_rep
 
 
 func begin_next_turn():

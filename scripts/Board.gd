@@ -6,7 +6,7 @@ func add_opponent_card(card_res):
 		return false
 
 	next_empty_slot.add_card(card_res, true)
-	return true
+	return next_empty_slot
 
 
 func add_player_card(card_res):

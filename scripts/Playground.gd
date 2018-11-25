@@ -9,6 +9,9 @@ var fire_dragon = preload("res://resources/FireDragon.tres")
 var electric_dragon = preload("res://resources/ElectricDragon.tres")
 var friendly_fish = preload("res://resources/FriendlyFish.tres")
 
+var wait_for_animation = false
+
+
 
 func _ready():
 	$MatchLogic.connect("player_turn_ended", self, "on_player_turn_ended")
@@ -32,6 +35,10 @@ func on_player_turn_ended(turn_number):
 	else:
 		final_turn_method()
 
+
+func post_summon(object, key):
+	if object:
+		object.disconnect_tween_finished(self, "post_summon")
 	attack_with_all_creatures()
 
 
@@ -51,9 +58,10 @@ func attack_with_all_creatures():
 
 
 func do_turn_1():
-	$MatchLogic.add_to_opponent_board(bear)
+	wait_for_animation = true
+	var my_new_card = $MatchLogic.add_to_opponent_board(self, bear)
 
 
 func final_turn_method():
 	# will call AI for attacks here
-	pass
+	post_summon(null, null)

@@ -20,6 +20,5 @@ func reset_all():
 
 func get_turn_number():
 	var logic = get_tree().get_root().find_node("MatchLogic", true, false)
-	
+
 	return logic.turn_number
-	
