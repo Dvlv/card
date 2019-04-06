@@ -3,7 +3,6 @@
 [ext_resource path="res://assets/cards/cardimages/bow-and-arrow.png" type="Texture" id=1]
 
 [sub_resource type="GDScript" id=1]
-
 script/source = "enum TYPES { Creature, Equip, Element, }
 enum ELEMENTS { Plain, Fire, Air, Earth, Water, Electricity, }
 enum FACTIONS { None, Forest, Orc, Human, Sea, Pole }
@@ -21,9 +20,7 @@ export(FACTIONS) var CARD_FACTION = FACTIONS.None
 export(CREATURE_TYPE) var CARD_CREATURE_TYPE = CREATURE_TYPE.NotCreature"
 
 [resource]
-
 script = SubResource( 1 )
-_sections_unfolded = [ "Resource" ]
 CARD_IMAGE = ExtResource( 1 )
 CARD_TYPE = 1
 CARD_TEXT = "Adds 1 Power"

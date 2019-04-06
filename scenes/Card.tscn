@@ -8,7 +8,6 @@
 [ext_resource path="res://ubuntu-df.tres" type="DynamicFont" id=6]
 
 [sub_resource type="GDScript" id=1]
-
 script/source = "enum TYPES { Creature, Equip, Element, }
 enum ELEMENTS { Plain, Fire, Air, Earth, Water, Electricity, }
 enum FACTIONS { None, Forest, Orc, Human, Sea, Pole }
@@ -26,9 +25,7 @@ export(FACTIONS) var CARD_FACTION = FACTIONS.None
 export(CREATURE_TYPE) var CARD_CREATURE_TYPE = CREATURE_TYPE.NotCreature"
 
 [sub_resource type="Resource" id=2]
-
 script = SubResource( 1 )
-_sections_unfolded = [ "Resource" ]
 CARD_IMAGE = ExtResource( 2 )
 CARD_TYPE = 1
 CARD_TEXT = "Adds 1 Power"
@@ -39,137 +36,78 @@ CARD_FACTION = null
 CARD_CREATURE_TYPE = null
 
 [sub_resource type="DynamicFontData" id=3]
-
-hinting = 2
 font_path = "res://Ubuntu-R.ttf"
 
 [sub_resource type="DynamicFont" id=4]
-
 size = 10
 use_mipmaps = true
 use_filter = true
 font_data = SubResource( 3 )
-_sections_unfolded = [ "Font", "Settings" ]
 
 [node name="Card" type="Node2D"]
-
 script = ExtResource( 1 )
 CARD_RESOURCE = SubResource( 2 )
 
-[node name="Background" type="Sprite" parent="." index="0"]
-
+[node name="Background" type="Sprite" parent="."]
 texture = ExtResource( 3 )
 
-[node name="CardImage" type="Sprite" parent="." index="1"]
-
+[node name="CardImage" type="Sprite" parent="."]
 position = Vector2( 0.157776, -59.3156 )
 texture = ExtResource( 4 )
 
-[node name="CardText" type="Label" parent="." index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = -58.0
-margin_top = 16.0
-margin_right = 55.0
-margin_bottom = 75.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
+[node name="CardText" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -56.5
+margin_top = 18.0
+margin_right = 56.5
+margin_bottom = 77.0
 custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Card Text"
+text = "Card Text which can be very long and stays centered, nice"
 align = 1
 valign = 1
 autowrap = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Theme", "custom_colors", "custom_fonts", "custom_styles" ]
 
-[node name="CardPower" type="Label" parent="." index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="CardPower" type="Label" parent="."]
 margin_left = -72.0
 margin_top = 89.0
 margin_right = -52.0
 margin_bottom = 110.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0.501961, 0.501961, 0.501961, 1 )
 text = "5"
 align = 1
 valign = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Theme", "custom_colors", "custom_fonts", "custom_styles" ]
 
-[node name="CardHP" type="Label" parent="." index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="CardHP" type="Label" parent="."]
 margin_left = 52.0
 margin_top = 89.0
 margin_right = 72.0
 margin_bottom = 110.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0.503906, 0.503906, 0.503906, 1 )
 text = "8"
 align = 1
 valign = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Material", "Pause", "Theme", "Visibility", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
 
-[node name="CardName" type="Label" parent="." index="5"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = -33.0
-margin_right = 28.0
-margin_bottom = 20.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
+[node name="CardName" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -30.5
+margin_top = -3.14099
+margin_right = 30.5
+margin_bottom = 16.859
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0.604516, 0.57431, 0.960938, 1 )
-text = "Owl"
+text = "Owl of death"
 align = 1
 valign = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "custom_colors", "custom_fonts", "custom_styles" ]
-
 

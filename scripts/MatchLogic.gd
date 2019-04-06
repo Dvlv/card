@@ -7,8 +7,8 @@ export var turn_number = 1
 
 
 func _ready():
-	$Opponent.connect("player_lose", self, "on_player_lose")
-	$Player.connect("player_lose", self, "on_player_lose")
+	$HealthDisplay/Opponent.connect("player_lose", self, "on_player_lose")
+	$HealthDisplay/Player.connect("player_lose", self, "on_player_lose")
 	$FuseBox.connect("card_output", self, "on_fusebox_card_output")
 
 
@@ -135,10 +135,10 @@ func post_effect():
 
 
 func damage_opponent(dmg):
-	$Opponent.take_dmg(dmg)
+	$HealthDisplay/Opponent.take_dmg(dmg)
 
 func damage_player(dmg):
-	$Player.take_dmg(dmg)
+	$HealthDisplay/Player.take_dmg(dmg)
 
 
 func add_to_opponent_board(opponent_controller, card_res):
@@ -241,7 +241,7 @@ func on_declare_attack(attacker_card_rep):
 
 	var opponent_creature_count = $Board.get_opponent_card_count()
 	if opponent_creature_count < 1:
-		globals.player_defending = $Opponent
+		globals.player_defending = $HealthDisplay/Opponent
 		do_attack_face(attacker_card_rep, true)
 	elif opponent_creature_count == 1:
 		var opponent_creature_card_rep = $Board.get_opponent_only_card()
@@ -253,7 +253,7 @@ func on_declare_attack(attacker_card_rep):
 
 
 func on_opponent_attacks_face(creature):
-	globals.player_defending = $Player
+	globals.player_defending = $HealthDisplay/Player
 	do_attack_face(creature, false)
 
 
@@ -269,7 +269,7 @@ func on_buff_same_element(card_effecting, element, power, hp):
 
 func on_heal_self(card_effecting, healing):
 	pre_effect(card_effecting)
-	$Player.heal(healing)
+	$HealthDisplay/Player.heal(healing)
 	post_effect()
 
 

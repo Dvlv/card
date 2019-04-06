@@ -4,9 +4,7 @@
 [ext_resource path="res://scripts/CardResource.gd" type="Script" id=2]
 
 [resource]
-
 script = ExtResource( 2 )
-_sections_unfolded = [ "Resource" ]
 CARD_NAME = "Owl"
 CARD_IMAGE = ExtResource( 1 )
 CARD_TYPE = 0

@@ -4,9 +4,7 @@
 [ext_resource path="res://scripts/CardResource.gd" type="Script" id=2]
 
 [resource]
-
 script = ExtResource( 2 )
-_sections_unfolded = [ "Resource" ]
 CARD_NAME = "Bow and Arrow"
 CARD_IMAGE = ExtResource( 1 )
 CARD_TYPE = 1
@@ -14,6 +12,6 @@ CARD_TEXT = "Adds 1 Power"
 POWER = 1
 HP = 0
 CARD_ELEMENT = 0
-CARD_FACTION = null
-CARD_CREATURE_TYPE = null
+CARD_FACTION = 0
+CARD_CREATURE_TYPE = 0
 

@@ -19,7 +19,7 @@ func _ready():
 	$AttackAI.connect("opponent_attacks_face", $MatchLogic, "on_opponent_attacks_face")
 	$AttackAI.connect("opponent_attacks_creature", $MatchLogic, "on_opponent_attacks_creature")
 
-	var deck = [owl, friendly_fish, friendly_fish, friendly_fish, friendly_fish, friendly_fish, friendly_fish, electric_dragon]
+	var deck = [owl, bear, bna, bna, bna, fire]
 
 	$MatchLogic.set_deck(deck)
 	$MatchLogic.fill_hand()

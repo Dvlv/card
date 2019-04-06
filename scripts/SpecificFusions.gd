@@ -5,7 +5,7 @@
 # Food + Food = Rat or Cockroach
 extends Node2D
 
-onready var CARD_RESOURCE = preload("res://CardResource.tres")
+var CARD_RESOURCE = preload("res://CardResource.tres")
 
 func specific_creature_creature_fusions(creature_one, creature_two):
 	# Alphabetise the two creatures for convenience?
