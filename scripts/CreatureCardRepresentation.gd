@@ -149,12 +149,18 @@ func take_damage(dmg):
 	CARD_RESOURCE.HP -= dmg
 	set_card_power_and_health()
 	if CARD_RESOURCE.HP < 1:
-		if my_slot:
-			my_slot.remove_card()
-		else:
-			CARD_RESOURCE.queue_free()
-			queue_free()
+		play_death_anim()
 
+func post_die(anim_name):
+	if my_slot:
+		my_slot.remove_card()
+	else:
+		CARD_RESOURCE.queue_free()
+		queue_free()
+
+func play_death_anim():
+	$AnimationPlayer.connect("animation_finished", self, "post_die")
+	$AnimationPlayer.play("death")
 
 func heal(healing):
 	CARD_RESOURCE.HP += healing
